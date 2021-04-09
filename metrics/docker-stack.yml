@@ -1,0 +1,63 @@
+version: "3.7"
+services:
+  telegraf:
+    image: telegraf:latest
+    hostname: "{{.Node.Hostname}}"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - backend
+    configs:
+      - source: telegraf.conf
+        target: /etc/telegraf/telegraf.conf
+    deploy:
+      mode: global
+  influxdb:
+    image: influxdb:alpine
+    configs:
+      - source: influxdb.conf
+        target: /etc/influxdb/influxdb.conf
+    volumes:
+      - /mnt/swarm/metrics/influxdb/data:/var/lib/influxdb
+    networks:
+      - backend
+    deploy:
+      mode: replicated
+      replicas: 1
+  grafana:
+    image: grafana/grafana:latest
+    volumes:
+      - /mnt/swarm/metrics/grafana/data:/var/lib/grafana
+    networks:
+      - frontend
+      - backend
+    deploy:
+      mode: replicated
+      replicas: 1
+    user: root
+  loki:
+    image: grafana/loki:latest
+    deploy:
+      mode: replicated
+      replicas: 1
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - backend
+  promtail:
+    image: grafana/promtail:latest
+    deploy:
+      mode: global
+    volumes:
+      - /var/log:/var/log
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - backend
+configs:
+  influxdb.conf:
+    external: true
+  telegraf.conf:
+    external: true
+networks:
+  frontend:
+    external: true
+  backend:
