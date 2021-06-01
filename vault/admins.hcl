@@ -155,6 +155,12 @@ path "sys/step-down" {capabilities = ["create", "update", "sudo"]}
 # Wrapping
 path "sys/wrapping/*" {capabilities = ["create", "update"]}
 
+# Enable key/value secrets engine at the kv-v1 path
+path "sys/mounts/kv-v1" {capabilities = [ "update" ]}
+
+# Write and manage secrets in key/value secrets engine
+path "kv-v1/*" {capabilities = [ "create", "read", "update", "delete", "list" ]}
+
 ## Enterprise Features
 
 # Manage license
