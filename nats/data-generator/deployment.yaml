@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nats-data-generator
+  namespace: nats
+  labels:
+    app: nats-data-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nats-data-generator
+  template:
+    metadata:
+      labels:
+        app: nats-data-generator
+    spec:
+      volumes:
+      containers:
+      - name: nats-data-generator
+        image: quay.io/ctrlplane/nats-data-generator:latest
+        imagePullPolicy: Always
+        env:
+        - name: JSON_TEMPLATE_LIST
+          value: "LtUiMCpr-UiC"
+        - name: JSON_GENERATOR_TOKEN
+          value: "vc6zxmnbv2oz41oelnwihqeeku4380licmt6th0p"
+        - name: JSON_GENERATOR_URL
+          value: "https://api.json-generator.com/templates"
+        - name: NATS_URL
+          value: "nats://nats:4222"
+        - name: NATS_USER
+          value: "ctrl"
+        - name: NATS_PASSWORD
+          value: "plane"
+        - name: NATS_TOPIC
+          value: "hello.world"
+
