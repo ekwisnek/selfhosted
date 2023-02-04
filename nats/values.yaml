@@ -1,0 +1,38 @@
+cluster:
+  enabled: true
+  replicas: 3
+nats:
+  resources:
+    requests:
+      cpu: 1
+      memory: 2Gi
+    limits:
+      cpu: 2
+      memory: 2Gi
+  jetstream:
+    enabled: true
+    encryption:
+      secret:
+        name: "nats-jetstream-encryption-key"
+        key: "jsKey"
+    memStorage:
+      enabled: true
+      size: "2Gi"
+    fileStorage:
+      enabled: true
+      size: "10Gi"
+      storageClassName: longhorn 
+auth:
+  enabled: true
+  systemAccount: "$SYS"
+  basic:
+    accounts:
+      $SYS:
+        users:
+        - user: sys
+          pass: sys
+      ctrlplane:
+        jetstream: true
+        users:
+        - user: ctrl
+          pass: plane
