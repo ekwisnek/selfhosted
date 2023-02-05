@@ -24,7 +24,11 @@ spec:
         - name: JSON_TEMPLATE_LIST
           value: "LtUiMCpr-UiC"
         - name: JSON_GENERATOR_TOKEN
-          value: "vc6zxmnbv2oz41oelnwihqeeku4380licmt6th0p"
+          valueFrom:
+            secretKeyRef:
+              name: json-generator-token
+              key: token
+              optional: false
         - name: JSON_GENERATOR_URL
           value: "https://api.json-generator.com/templates"
         - name: NATS_URL
