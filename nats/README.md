@@ -8,4 +8,5 @@ Deploy monitoring:
 >_NOTE:_ This assumes you have the Prometheus operator already installed in your Kubernetes cluster.
 ```
 $ kubectl create -f monitoring/monitoring.yaml
+$ helm install grafana grafana/grafana -f grafana-values.yaml
 ```

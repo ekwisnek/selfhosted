@@ -1,0 +1,22 @@
+persistence:
+  enabled: true
+  type: pvc
+  size: 5Gi
+  storageClassName: longhorn
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      url: http://prometheus-operated:9090
+      access: proxy
+      isDefault: true
+# Haven't gotten the dashboard import to work yet.
+# It's not hard to import, though.      
+#dashboards:
+#  default:
+#    nats-server-dashboard:
+#      gnetId: 13707
+#      revision: 1
+#      datasource: Prometheus
