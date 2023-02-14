@@ -5,7 +5,7 @@ persistence:
   accessModes:
     - ReadWriteMany
   type: pvc
-  size: 5Gi
+  size: 1Gi
   storageClassName: longhorn
 rbac:
   pspEnabled: false
