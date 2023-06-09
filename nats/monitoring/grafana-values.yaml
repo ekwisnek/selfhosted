@@ -7,6 +7,15 @@ persistence:
   type: pvc
   size: 1Gi
   storageClassName: longhorn
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  annotations: {}
+  labels: {}
+  path: /
+  pathType: Prefix
+  hosts:
+    - grafana.k8s.home
 rbac:
   pspEnabled: false
 replicas: 3
