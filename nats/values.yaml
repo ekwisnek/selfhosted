@@ -1,7 +1,7 @@
-cluster:
-  enabled: true
-  replicas: 3
-nats:
+config:
+  cluster:
+    enabled: true
+    replicas: 3
   resources:
     requests:
       cpu: 1
@@ -22,17 +22,19 @@ nats:
       enabled: true
       size: "10Gi"
       storageClassName: longhorn 
-auth:
+promExporter:
   enabled: true
-  systemAccount: "$SYS"
-  basic:
-    accounts:
-      $SYS:
-        users:
-        - user: sys
-          pass: sys
-      ctrlplane:
-        jetstream: true
-        users:
-        - user: ctrl
-          pass: plane
+  merge:
+    authorization:
+      accounts:
+        $SYS:
+          users:
+          - user: sys
+            pass: sys
+        ctrlplane:
+          jetstream: true
+          users:
+          - user: ctrl
+            pass: plane
+    system_account: "$SYS"
+
