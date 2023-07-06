@@ -1,14 +1,20 @@
-project: default
-destination:
-  server: 'https://kubernetes.default.svc'
-  namespace: longhorn-system
-sources:
-  - repoURL: 'https://charts.longhorn.io'
-    targetRevision: 1.4.2
-    helm:
-      valueFiles:
-        - $values/kubernetes/longhorn/values.yaml
-    chart: longhorn
-  - repoURL: 'git@github.com:ekwisnek/selfhosted.git'
-    targetRevision: main
-    ref: values
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: longhorn
+  namespace: argocd
+project: "default"
+spec:  
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: longhorn-system
+  sources:
+    - repoURL: 'https://charts.longhorn.io'
+      targetRevision: 1.4.2
+      helm:
+        valueFiles:
+          - $values/kubernetes/longhorn/values.yaml
+      chart: longhorn
+    - repoURL: 'git@github.com:ekwisnek/selfhosted.git'
+      targetRevision: main
+      ref: values
