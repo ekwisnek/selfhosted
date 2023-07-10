@@ -1,0 +1,11 @@
+---
+architecture: replication
+auth:
+  rootPassword: admin
+  database: semaphore
+  username: semaphore
+  password: semaphore
+persistence:
+  size: 2Gi
+secondary:
+  replicaCount: "2"
