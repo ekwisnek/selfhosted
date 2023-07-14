@@ -4,37 +4,37 @@ config:
     replicas: 3
   resources:
     requests:
-      cpu: 1
-      memory: 2Gi
+      cpu: 250m
+      memory: 128Mi
     limits:
-      cpu: 2
-      memory: 2Gi
+      cpu: 1000m
+      memory: 512Mi
   jetstream:
     enabled: true
     encryption:
       secret:
         name: "nats-jetstream-encryption-key"
         key: "jsKey"
-    memStorage:
+    memoryStore:
       enabled: true
-      size: "2Gi"
-    fileStorage:
+      size: "500MGi"
+    fileStore:
       enabled: true
-      size: "10Gi"
-      storageClassName: longhorn 
+      pvc:
+        storageClassName: rook-ceph-block 
+        size: "10Gi"
+  merge:
+    accounts:
+      $SYS:
+        users:
+        - user: sys
+          pass: sys
+      ctrlplane:
+        jetstream: true
+        users:
+        - user: ctrl
+          pass: plane
+    system_account: "$SYS"
 promExporter:
   enabled: true
-  merge:
-    authorization:
-      accounts:
-        $SYS:
-          users:
-          - user: sys
-            pass: sys
-        ctrlplane:
-          jetstream: true
-          users:
-          - user: ctrl
-            pass: plane
-    system_account: "$SYS"
 
