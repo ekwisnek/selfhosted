@@ -21,7 +21,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: semaphore
+    app.kubernetes.io/name: semaphore
   name: semaphore
 spec:
   replicas: 1
@@ -41,6 +41,7 @@ spec:
                 name: semaphore-config
           ports:
             - containerPort: 3000
+              name: semaphore-ui
           resources:
             requests:
               cpu: 100m
@@ -52,14 +53,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: semaphore
-  namespace: semaphore
+  namespace: semaphors
 spec:
   type: ClusterIP
   ports:
     - port: 3000
       protocol: TCP
-      targetPort: 3000
+      targetPort: semaphore-ui
   selector:
-    matchLabels:
-      app: semaphore
+    app.kubernetes.io/name: semaphore
