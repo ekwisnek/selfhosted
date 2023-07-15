@@ -53,7 +53,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: semaphors
+  namespace: semaphore
 spec:
   type: ClusterIP
   ports:
