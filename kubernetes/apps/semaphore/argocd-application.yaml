@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: semaphore
+  namespace: argocd
+spec:
+  project: "default"
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: semaaphore
+  syncPolicy:
+      syncOptions:
+      - CreateNamespace=true
+  sources:
+  - repoURL: 'https://charts.bitnami.com/bitnami'
+    chart: mysql
+    targetRevision: 9.10.6
+    helm:
+      valueFiles:
+      - $values/kubernetes/apps/semaphore/mysql/values.yaml
+  - repoURL: 'git@github.com:ekwisnek/selfhosted.git'
+    targetRevision: HEAD
+    ref: values
+  - repoURL: 'git@github.com:ekwisnek/selfhosted.git'
+    targetRevision: HEAD
+    path: kubernetes/apps/semaphore/semaphore.yaml
