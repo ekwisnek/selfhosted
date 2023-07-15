@@ -55,7 +55,7 @@ metadata:
   name: semaphore
   namespace: semaphore
 spec:
-  kind: ClusterIP
+  type: ClusterIP
   ports:
     - port: 3000
       protocol: TCP
