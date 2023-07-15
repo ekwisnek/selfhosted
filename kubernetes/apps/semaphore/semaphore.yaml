@@ -14,7 +14,7 @@ data:
   MYSQL_ROOT_PASSWORD: semaphore
   SEMAPHORE_DB: semaphore
   SEMAPHORE_DB_DIALECT: mysql
-  SEMAPHORE_DB_HOST: mysql-primary
+  SEMAPHORE_DB_HOST: semaphore-mysql-primary
   SEMAPHORE_DB_PORT: "3306"
 ---
 apiVersion: apps/v1
