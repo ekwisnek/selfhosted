@@ -61,4 +61,5 @@ spec:
       protocol: TCP
       targetPort: 3000
   selector:
-    app: semaphore
+    matchLabels:
+      app: semaphore
