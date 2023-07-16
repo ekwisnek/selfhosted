@@ -1,0 +1,37 @@
+server:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memroy: 512Mi
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
+      cert-manager.io/cluster-issuer: letsencrypt
+    ingressClassName: nginx
+    hosts:
+      - host: vault.ctrlplane.net
+        paths: /
+    tls:
+      - hosts:
+        - vault.ctrlplane.net
+        - www.vault.ctrlplane.net
+        secretName: ctrlplane-web-cert
+  dataStorage:
+    enabled: true
+    size: 10Gi
+    storageClass: rook-ceph-block
+  auditStorage:
+    enabled: true
+    size: 10Gi
+    storageClass: rook-ceph-block
+  ha:
+    enabled: true
+    replicas: 3
+    raft:
+      enabled: true
+ui:
+  enabled: true
