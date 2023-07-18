@@ -5,7 +5,7 @@ server:
       memory: 256Mi
     limits:
       cpu: 500m
-      memroy: 512Mi
+      memory: 512Mi
   ingress:
     enabled: true
     annotations:
@@ -14,12 +14,12 @@ server:
     ingressClassName: nginx
     hosts:
       - host: vault.ctrlplane.net
-        paths: /
+    paths: /
     tls:
       - hosts:
-        - vault.ctrlplane.net
-        - www.vault.ctrlplane.net
-        secretName: ctrlplane-web-cert
+          - vault.ctrlplane.net
+          - www.vault.ctrlplane.net
+        secretName: vault-ctrlplane-net-web-cert
   dataStorage:
     enabled: true
     size: 10Gi
