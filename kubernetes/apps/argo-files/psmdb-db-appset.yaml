@@ -65,10 +65,14 @@ spec:
                 - name: mongo-client
                   image: percona/percona-server-mongodb:5.0.21
                   command:
-                    - echo {{dbuser}}
-                    - mongo
-                    - mongodb+srv://userAdmin:DWNiVxfa5lygpjb2I@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false
-                    - --eval
-                    - db.createUser({user: {{dbuser}}, pwd: 'password', roles: [{db: {{ dbname }}, role: 'readWrite' }], mechanisms: ['SCRAM-SHA-1']})
+                    - echo -e $DB_USER
+                    - echo -e $DB_NAME
+                    # - mongo
+                    # - mongodb+srv://userAdmin:DWNiVxfa5lygpjb2I@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false
+                    # - --eval
+                    # - db.createUser({user: {{dbuser}}, pwd: 'password', roles: [{db: {{ dbname }}, role: 'readWrite' }], mechanisms: ['SCRAM-SHA-1']})
+                  env:
+                    DB_USER: {{dbuser}}
+                    DB_NAME: {{dbname}}
               restartPolicy: Never
           backoffLimit: 2
