@@ -13,7 +13,7 @@ spec:
           - cluster: in-cluster
             storageclass: rook-ceph-block
             url: https://kubernetes.default.svc
-            dbname: app-db
+            dbname: test
             dbuser: app-user
   template:
     metadata:
