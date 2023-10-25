@@ -14,14 +14,14 @@ spec:
         - name: mongo-client
           image: redhat/ubi8:latest
           command:
-            - "sh"
-            - "-c"
-            - "echo"
-            - "$DB_USER"
-          env:
-            - name: DB_USER
-              value: "{{ dbuser }}"
-            - name: DB_NAME
-              value: "{{ dbname }}"
+            - "mongo"
+            - "mongodb+srv://userAdmin:DWNiVxfa5lygpjb2I@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
+            - "--eval"
+            - "db.createUser({user: '{{ .dbUser }}', pwd: 'password', roles: [{db: '{{ .dbname }}', role: 'readWrite' }], mechanisms: ['SCRAM-SHA-1']})"
+          # env:
+          #   - name: DB_USER
+          #     value: "{{ dbuser }}"
+          #   - name: DB_NAME
+          #     value: "{{ dbname }}"
       restartPolicy: Never
   backoffLimit: 2

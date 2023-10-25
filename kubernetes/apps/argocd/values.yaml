@@ -19,14 +19,6 @@ repoServer:
     targetMemoryUtilizationPercentage: 50
 applicationSet:
   replicaCount: 2
-server:
-  resources:
-    limits:
-      cpu: 100m
-      memory: 128Mi
-    requests:
-      cpu: 50m
-      memory: 64Mi  
 repoServer:
   resources:
     limits:
@@ -35,3 +27,11 @@ repoServer:
     requests:
       cpu: 50m
       memory: 64Mi
+server:
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 50m
+      memory: 64Mi  

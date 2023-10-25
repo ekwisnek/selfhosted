@@ -33,6 +33,10 @@ spec:
           helm:
             valueFiles:
               - $values/kubernetes/apps/percona-mongodb/values.yaml
+            values: |
+              custom:
+                dbName: {{dbname}}
+                dbUser: {{dbuser}}
         # - repoURL: "git@github.com:ekwisnek/selfhosted.git"
         #   targetRevision: HEAD
         #   path: kubernetes/apps/percona-mongodb
@@ -46,7 +50,3 @@ spec:
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true
-# - mongo
-# - mongodb+srv://userAdmin:DWNiVxfa5lygpjb2I@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false
-# - --eval
-# - db.createUser({user: {{dbuser}}, pwd: 'password', roles: [{db: {{ dbname }}, role: 'readWrite' }], mechanisms: ['SCRAM-SHA-1']})
