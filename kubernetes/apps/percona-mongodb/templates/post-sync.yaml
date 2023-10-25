@@ -17,6 +17,6 @@ spec:
             - "mongo"
             - "mongodb+srv://userAdmin:DWNiVxfa5lygpjb2I@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
             - "--eval"
-            - "db.createUser({user: '{{ .custom.dbUser }}', pwd: 'password', roles: [{db: '{{ .custom.dbname }}', role: 'readWrite' }], mechanisms: ['SCRAM-SHA-1']})"
+            - "db.createUser({user: '{{ .Values.custom.dbUser }}', pwd: 'password', roles: [{db: '{{ .Values.custom.dbname }}', role: 'readWrite' }], mechanisms: ['SCRAM-SHA-1']})"
       restartPolicy: Never
   backoffLimit: 2
