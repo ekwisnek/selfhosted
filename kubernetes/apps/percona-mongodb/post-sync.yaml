@@ -1,0 +1,21 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: mongodb-database-creation-
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  template:
+    spec:
+      serviceAccountName: changeme
+      containers:
+        - name: mongo
+          image: percona/percona-server-mongodb:4.4.24-23
+          command:
+            - "mongo"
+            - "mongodb+srv://userAdmin:userAdmin123456@my-cluster-name-rs0.psmdb.svc.cluster.local/admin?replicaSet=rs0&ssl=false;"
+            - "db.createUser({user: 'myApp', pwd: 'myAppPassword', roles: [{ db: 'myApp', role: 'readWrite' }], mechanisms: ['SCRAM-SHA-1']})"
+      restartPolicy: Never
+  backoffLimit: 2
