@@ -25,7 +25,7 @@ spec:
           targetRevision: HEAD
           ref: values
         - chart: psmdb-operator
-          repoURL: https://harbor.cp.az.km.spaceforce.mil/chartrepo/percona
+          repoURL: https://percona.github.io/percona-helm-charts/ 
           targetRevision: 1.14.3
           helm:
             valueFiles:
