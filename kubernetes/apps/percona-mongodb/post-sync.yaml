@@ -15,7 +15,7 @@ spec:
           image: percona/percona-server-mongodb:5.0.21
           command:
             - "mongo"
-            - "mongodb+srv://userAdmin:DWNiVxfa5lygpjb2I@mongo-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
+            - "mongodb+srv://userAdmin:DWNiVxfa5lygpjb2I@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
             - "--eval"
             - "db.createUser({user: 'myApp', pwd: 'myPassword', roles: [{db: 'test', role: 'readWrite' }], mechanisms: ['SCRAM-SHA-1']})"
       restartPolicy: Never
