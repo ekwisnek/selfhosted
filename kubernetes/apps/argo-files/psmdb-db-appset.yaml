@@ -27,12 +27,12 @@ spec:
         - repoURL: "git@github.com:ekwisnek/selfhosted.git"
           targetRevision: HEAD
           ref: values
-        - repoURL: "git@github.com:ekwisnek/selfhosted.git"
-          targetRevision: HEAD
-          path: kubernetes/apps/percona-mongodb
-          # - chart: psmdb-db
-          #   repoURL: https://percona.github.io/percona-helm-charts/
-          #   targetRevision: 1.14.3
+        # - repoURL: "git@github.com:ekwisnek/selfhosted.git"
+        #   targetRevision: HEAD
+        #   path: kubernetes/apps/percona-mongodb
+        - chart: psmdb-db
+          repoURL: https://percona.github.io/percona-helm-charts/
+          targetRevision: 1.14.3
           helm:
             valueFiles:
               - $values/kubernetes/apps/percona-mongodb/values.yaml
