@@ -33,9 +33,9 @@ spec:
           helm:
             valueFiles:
               - $values/kubernetes/apps/percona-mongodb/values.yaml
-        - repoURL: "git@github.com:ekwisnek/selfhosted.git"
-          targetRevision: HEAD
-          path: kubernetes/apps/percona-mongodb
+        # - repoURL: "git@github.com:ekwisnek/selfhosted.git"
+        #   targetRevision: HEAD
+        #   path: kubernetes/apps/percona-mongodb
       destination:
         server: "{{url}}"
         namespace: mongodb
@@ -46,3 +46,28 @@ spec:
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true
+  postSync:
+    - name: add-mongodb-user
+      hookType: Job
+      manifest: |
+        apiVersion: batch/v1
+        kind: Job
+        metadata:
+          generateName: mongodb-database-creation-
+          annotations:
+            argocd.argoproj.io/hook: PostSync
+            argocd.argoproj.io/hook-delete-policy: HookSucceeded
+        spec:
+          template:
+            spec:
+              serviceAccountName: default
+              containers:
+                - name: mongo-client
+                  image: percona/percona-server-mongodb:5.0.21
+                  command:
+                    - "mongo"
+                    - "mongodb+srv://userAdmin:DWNiVxfa5lygpjb2I@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
+                    - "--eval"
+                    - "db.createUser({user: '{{dbuser}}', pwd: 'password', roles: [{db: '{{dbname}}', role: 'readWrite' }], mechanisms: ['SCRAM-SHA-1']})"
+              restartPolicy: Never
+          backoffLimit: 2
