@@ -1,0 +1,24 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: mongodb-database-creation-
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  template:
+    spec:
+      serviceAccountName: default
+      containers:
+        - name: mongo-client
+          image: redhat/ubi8:latest
+          command:
+            - echo -e $DB_USER; echo -e $DB_NAME
+          env:
+            - name: DB_USER
+              value: "{{ dbuser }}"
+            - name: DB_NAME
+              value: "{{ dbname }}"
+      restartPolicy: Never
+  backoffLimit: 2
