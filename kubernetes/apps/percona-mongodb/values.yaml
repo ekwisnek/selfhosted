@@ -119,25 +119,25 @@ backup:
     requests:
       cpu: "300m"
       memory: "0.5G"
-  # storages:
-  #   azure-blob:
-  #     type: azure
-  #     azure:
-  #       container: CONTAINER-NAME
-  #       prefix: PREFIX-NAME
-  #       credentialsSecret: SECRET-NAME
+  storages:
+    azure-blob:
+      type: azure
+      azure:
+        container: CONTAINER-NAME
+        prefix: PREFIX-NAME
+        credentialsSecret: SECRET-NAME
   pitr:
     enabled: false
     oplogSpanMin: 10
     compressionType: gzip
     compressionLevel: 6
   tasks:
-  # - name: daily-s3-us-west
-  #   enabled: true
-  #   schedule: "0 0 * * *"
-  #   keep: 3
-  #   storageName: s3-us-west
-  #   compressionType: gzip
+    - name: daily-s3-us-west
+      enabled: true
+      schedule: "0 0 * * *"
+      keep: 3
+      storageName: azure-blob
+      compressionType: gzip
 # If you set users here the secret will be constructed by helm with these values
 # users:
 #   MONGODB_BACKUP_USER: backup
