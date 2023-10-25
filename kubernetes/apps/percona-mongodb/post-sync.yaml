@@ -11,11 +11,12 @@ spec:
     spec:
       serviceAccountName: default
       containers:
-        - name: mongo
-          image: percona/percona-server-mongodb:4.4.24-23
+        - name: mongo-client
+          image: mongo:latest
           command:
             - "mongo"
-            - "mongodb+srv://userAdmin:DWNiVxfa5lygpjb2I@mongo-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false;"
-            - "db.createUser({user: 'myApp', pwd: 'myAppPassword', roles: [{ db: 'myApp', role: 'readWrite' }], mechanisms: ['SCRAM-SHA-1']})"
+            - "mongodb+srv://userAdmin:DWNiVxfa5lygpjb2I@mongo-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
+            - "--eval"
+            - "db.createUser({user: 'myApp', pwd: 'myPassword', roles: [{db: 'test', role: 'readWrite' }], mechanisms: ['SCRAM-SHA-1']})"
       restartPolicy: Never
   backoffLimit: 2
