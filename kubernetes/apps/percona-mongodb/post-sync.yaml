@@ -14,7 +14,7 @@ spec:
         - name: mongo-client
           image: redhat/ubi8:latest
           command:
-            - echo -e $DB_USER; echo -e $DB_NAME
+            - "echo -e $DB_USER; echo -e $DB_NAME"
           env:
             - name: DB_USER
               value: "{{ dbuser }}"
