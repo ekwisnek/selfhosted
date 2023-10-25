@@ -9,7 +9,7 @@ metadata:
 spec:
   template:
     spec:
-      serviceAccountName: changeme
+      serviceAccountName: default
       containers:
         - name: mongo
           image: percona/percona-server-mongodb:4.4.24-23

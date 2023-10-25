@@ -17,8 +17,11 @@ spec:
       targetRevision: HEAD
       ref: values
   syncPolicy:
+    automated:
+      prune: true
     syncOptions:
       - CreateNamespace=true
+      - RespectIgnoreDifferences=true
   destination:
     namespace: vault
     server: https://kubernetes.default.svc
