@@ -1,3 +1,4 @@
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -14,17 +15,17 @@ metadata:
 spec:
   ingressClassName: "nginx"
   rules:
-  - host: argocd.ctrlplane.net
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: argo-cd-argocd-server
-            port:
-              name: https
+    - host: argocd.ctrlplane.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argo-cd-argocd-server
+                port:
+                  name: https
   tls:
-  - hosts:
-    - argocd.ctrlplane.net
-    secretName: argocd-secret # do not change, this is provided by Argo CD
+    - hosts:
+        - argocd.ctrlplane.net
+      secretName: argocd-secret # do not change, this is provided by Argo CD

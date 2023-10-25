@@ -1,3 +1,4 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -12,15 +13,15 @@ spec:
       helm:
         valueFiles:
           - $values/kubernetes/apps/vault/values.yaml
-    - repoURL: 'git@github.com:ekwisnek/selfhosted.git'
+    - repoURL: "git@github.com:ekwisnek/selfhosted.git"
       targetRevision: HEAD
       ref: values
   syncPolicy:
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true
   destination:
     namespace: vault
     server: https://kubernetes.default.svc
   ignoreDifferences:
-  - group: admissionregistration.k8s.io
-    kind: MutatingWebhookConfiguration
+    - group: admissionregistration.k8s.io
+      kind: MutatingWebhookConfiguration

@@ -10,14 +10,18 @@ spec:
   concurrency: 1
   nodeSelector:
     matchExpressions:
-       - {key: rke2-upgrade, operator: Exists}
-       - {key: rke2-upgrade, operator: NotIn, values: ["disabled", "false"]}
-       # When using k8s version 1.19 or older, swap control-plane with master
-       - {key: node-role.kubernetes.io/control-plane, operator: In, values: ["true"]}
+      - { key: rke2-upgrade, operator: Exists }
+      - { key: rke2-upgrade, operator: NotIn, values: ["disabled", "false"] }
+      # When using k8s version 1.19 or older, swap control-plane with master
+      - {
+          key: node-role.kubernetes.io/control-plane,
+          operator: In,
+          values: ["true"],
+        }
   serviceAccountName: system-upgrade
   cordon: true
-#  drain:
-#    force: true
+  #  drain:
+  #    force: true
   upgrade:
     image: rancher/rke2-upgrade
   version: v1.26.6+rke2r1
@@ -34,14 +38,18 @@ spec:
   concurrency: 2
   nodeSelector:
     matchExpressions:
-      - {key: rke2-upgrade, operator: Exists}
-      - {key: rke2-upgrade, operator: NotIn, values: ["disabled", "false"]}
+      - { key: rke2-upgrade, operator: Exists }
+      - { key: rke2-upgrade, operator: NotIn, values: ["disabled", "false"] }
       # When using k8s version 1.19 or older, swap control-plane with master
-      - {key: node-role.kubernetes.io/control-plane, operator: NotIn, values: ["true"]}
+      - {
+          key: node-role.kubernetes.io/control-plane,
+          operator: NotIn,
+          values: ["true"],
+        }
   prepare:
     args:
-    - prepare
-    - server-plan
+      - prepare
+      - server-plan
     image: rancher/rke2-upgrade
   serviceAccountName: system-upgrade
   cordon: true
