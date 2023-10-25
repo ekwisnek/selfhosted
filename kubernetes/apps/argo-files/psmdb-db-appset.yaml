@@ -38,8 +38,8 @@ spec:
               - $values/kubernetes/apps/percona-mongodb/values.yaml
             valuesObject:
               custom:
-                dbName: { { dbname } }
-                dbUser: { { dbuser } }
+                dbName: "{{ dbname }}"
+                dbUser: "{{ dbuser }}"
         # - repoURL: "git@github.com:ekwisnek/selfhosted.git"
         #   targetRevision: HEAD
         #   path: kubernetes/apps/percona-mongodb
