@@ -36,13 +36,13 @@ spec:
           helm:
             valueFiles:
               - $values/kubernetes/apps/percona-mongodb/values.yaml
-            valuesObject:
-              custom:
-                dbName: "{{dbname}}"
-                dbUser: "{{dbuser}}"
-        # - repoURL: "git@github.com:ekwisnek/selfhosted.git"
-        #   targetRevision: HEAD
-        #   path: kubernetes/apps/percona-mongodb
+            # valuesObject:
+            #   custom:
+            #     dbName: "{{dbname}}"
+            #     dbUser: "{{dbuser}}"
+        - repoURL: "git@github.com:ekwisnek/selfhosted.git"
+          targetRevision: HEAD
+          path: kubernetes/apps/percona-mongodb/additional-resources
       destination:
         server: "{{url}}"
         namespace: mongodb

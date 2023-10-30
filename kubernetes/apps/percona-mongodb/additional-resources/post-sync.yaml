@@ -1,0 +1,44 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: mongodb-user-creation-
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  template:
+    spec:
+      serviceAccountName: default
+      containers:
+        - name: mongo-client
+          image: percona/percona-server-mongodb:6.0.11
+          command:
+            - "mongosh"
+            - "mongodb+srv://userAdmin:DWNiVxfa5lygpjb2I@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
+            - "--eval"
+            - "db.createUser({user: CN=mongo-user, roles: [{db: test-db, role: 'readWrite' }], mechanisms: ['MONGODB-X509']})"
+      restartPolicy: Never
+  backoffLimit: 2
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: mongodb-database-creation-
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  template:
+    spec:
+      serviceAccountName: default
+      containers:
+        - name: mongo-client
+          image: percona/percona-server-mongodb:6.0.11
+          command:
+            - "mongosh"
+            - "mongodb+srv://databaseAdmin:wH4qlp7HPOT17iZT@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
+            - "--eval"
+            - "use test-db"
+      restartPolicy: Never
+  backoffLimit: 2
