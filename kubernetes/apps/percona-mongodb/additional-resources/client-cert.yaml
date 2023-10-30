@@ -4,9 +4,9 @@ metadata:
   name: mongo-client-cert
   namespace: mongodb
 spec:
-  commonName: mongo-user
+  commonName: app-user
   dnsNames:
-    - mongo-user
+    - app-user
   duration: 2160h0m0s
   issuerRef:
     kind: Issuer
