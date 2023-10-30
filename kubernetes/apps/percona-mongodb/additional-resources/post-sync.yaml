@@ -17,7 +17,7 @@ spec:
             - "mongosh"
             - "mongodb+srv://userAdmin:DWNiVxfa5lygpjb2I@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
             - "--eval"
-            - "db.createUser({user: 'CN=mongo-user', roles: [{db: 'test-db', role: 'readWrite' }], mechanisms: ['MONGODB-X509']})"
+            - "db.createUser({ user: 'CN=mongo-user', roles: [{db: 'test-db', role: 'readWrite' }] })"
       restartPolicy: Never
   backoffLimit: 3
 ---
