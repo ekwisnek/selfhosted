@@ -19,7 +19,7 @@ spec:
           ports:
             - containerPort: 9216
           args:
-            - "--mongodb.uri=mongodb://mongodb_exporter:password@{{ .Release.Name }}-psmdb-mongos.km-mongodb-operator.svc.cluster.local:27017"
+            - "--mongodb.uri=mongodb://mongodb_exporter:password@mongodb-in-cluster-ps-rs0.km-mongodb-operator.svc.cluster.local:27017"
             - "--mongodb.collstats-colls=test.test"
             - "--log.level=debug"
             - "--collect-all"

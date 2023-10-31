@@ -15,11 +15,11 @@ spec:
           image: percona/percona-server-mongodb:6.0.11
           command:
             - "mongosh"
-            - "mongodb+srv://databaseAdmin:${MONGODB_DATABASE_ADMIN_PASSWORD}@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
+            - "mongodb+srv://${MONGODB_DATABASE_ADMIN_USER}:${MONGODB_DATABASE_ADMIN_PASSWORD}@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
             - "--eval"
             - "load('/tmp/init-database.js')"
             - "mongosh"
-            - "mongodb+srv://userAdmin:${MONGODB_USER_ADMIN_PASSWORD}@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
+            - "mongodb+srv://${MONGODB_USER_ADMIN_USER}:${MONGODB_USER_ADMIN_PASSWORD}@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
             - "--eval"
             - "load('/tmp/init-users.js')"
           env:
@@ -32,6 +32,16 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: MONGODB_USER_ADMIN_PASSWORD
+                  name: mongodb-in-cluster-ps-secrets
+            - name: MONGODB_DATABASE_ADMIN_USER
+              valueFrom:
+                secretKeyRef:
+                  key: MONGODB_DATABASE_ADMIN_USER
+                  name: mongodb-in-cluster-ps-secrets
+            - name: MONGODB_USER_ADMIN_USER
+              valueFrom:
+                secretKeyRef:
+                  key: MONGODB_USER_ADMIN_USER
                   name: mongodb-in-cluster-ps-secrets
           volumeMounts:
             - name: init-scripts

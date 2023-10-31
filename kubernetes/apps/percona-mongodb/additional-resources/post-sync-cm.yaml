@@ -8,16 +8,22 @@ data:
       "mongodb-in-cluster-ps-rs0-0.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local";
     const mongoPort = 27017;
     const adminDbName = "admin";
-    const adminUser = "databaseAdmin";
+    const adminUser = process.env.MONGODB_DATABASE_ADMIN_USER;
+    const adminUserPassword = process.env.MONGODB_DATABASE_ADMIN_PASSWORD;
     const newCommonName = "evan";
     const newDbName = "evan";
     const collectionName = "test_collection";
+
+    if (!adminUser || !adminUserPassword || !mongoHost) {
+      console.error("Missing environment variables for MongoDB connection.");
+      process.exit(1);
+    }
 
     // Connect to the admin database with the admin credentials
     const conn = new Mongo(`${mongoHost}:${mongoPort}`);
     const adminDB = conn.getDB(adminDbName);
     const newDB = conn.getDB(newDbName);
-    adminDB.auth(adminUser, "wH4qlp7HPOT17iZT");
+    adminDB.auth(adminUser, adminUserPassword);
 
     // Switch to the 'evan' database
     const evanDB = conn.getDB(newDbName);
@@ -33,47 +39,68 @@ data:
 
     db = db.getSiblingDB(newDbName);
 
+    // Create new collection
     try {
       db.createCollection(collectionName);
     } catch (error) {
       console.log(error);
     }
 
+    // Test inserting a document
     id = db[collectionName].insertOne({ name: "test", age: 30 });
 
     print(id);
 
-    print("Finding inserted ObjectId\n");
+    print("\nFinding inserted ObjectId\n");
 
     find = db[collectionName].find(ObjectId(id.insertedId));
 
     print(find);
 
-    print("Deleting inserted ObjectId\n");
+    print("\nDeleting inserted ObjectId\n");
 
     delete_ = db[collectionName].deleteOne({ _id: ObjectId(id.insertedId) });
 
     print(delete_);
+
   init-users.js: |
     const mongoHost =
-      "mongodb-in-cluster-ps-rs0-0.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local";
-    const mongoPort = 27017;
-    const adminDbName = "admin";
-    const adminUser = "userAdmin";
-    const newCommonName = "evan";
-    const newDbName = "evan";
+       "mongodb-in-cluster-ps-rs0-0.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local";
+     const mongoPort = 27017;
+     const adminDbName = "admin";
+     const adminUser = process.env.MONGODB_USER_ADMIN_USER;
+     const adminUserPassword = process.env.MONGODB_USER_ADMIN_PASSWORD;
+     const newCommonName = "evan";
+     const newDbName = "evan";
 
-    // Connect to the admin database with the admin credentials
-    const conn = new Mongo(`${mongoHost}:${mongoPort}`);
-    const adminDB = conn.getDB(adminDbName);
-    const newDB = conn.getDB(newDbName);
-    adminDB.auth(adminUser, "DWNiVxfa5lygpjb2I");
+     if (!adminUser || !adminUserPassword || !mongoHost) {
+       console.error("Missing environment variables for MongoDB connection.");
+       process.exit(1);
+     }
 
-    try {
-      newDB.getSiblingDB("$external").runCommand({
-        createUser: `CN='${newCommonName}'`,
-        roles: [{ role: "readWrite", db: newDbName }],
-      });
-    } catch (error) {
-      console.log(error);
-    }
+     // Connect to the admin database with the admin credentials
+     const conn = new Mongo(`${mongoHost}:${mongoPort}`);
+     const adminDB = conn.getDB(adminDbName);
+     const newDB = conn.getDB(newDbName);
+     adminDB.auth(adminUser, adminUserPassword);
+
+     // Add mongodb_exporter account for observability
+     try {
+       adminDB.createUser({
+         user: "mongodb_exporter",
+         pwd: "password",
+         roles: ["clusterMonitor"],
+       });
+     } catch (error) {
+       console.log(error);
+     }
+
+     // Add application user
+     try {
+       newDB.getSiblingDB("$external").runCommand({
+         createUser: `CN='${newCommonName}'`,
+         roles: [{ role: "readWrite", db: newDbName }],
+       });
+     } catch (error) {
+       console.log(error);
+     }
