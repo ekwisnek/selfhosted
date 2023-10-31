@@ -34,11 +34,11 @@ spec:
                 configMapKeyRef:
                   name: post-sync-cm
                   key: MONGODB_DATABASE_NAME
-            - name: COLLECTION_NAME
+            - name: MONGODB_COLLECTION_NAME
               valueFrom:
                 configMapKeyRef:
                   name: post-sync-cm
-                  key: COLLECTION_NAME
+                  key: MONGODB_COLLECTION_NAME
             - name: MONGODB_REPLICASET_NAME
               valueFrom:
                 configMapKeyRef:
@@ -74,11 +74,11 @@ spec:
                 configMapKeyRef:
                   name: post-sync-cm
                   key: MONGODB_DATABASE_NAME
-            - name: DATABASE_USER
+            - name: MONGODB_DATABASE_USER
               valueFrom:
                 configMapKeyRef:
                   name: post-sync-cm
-                  key: DATABASE_USER
+                  key: MONGODB_DATABASE_USER
             - name: MONGODB_REPLICASET_NAME
               valueFrom:
                 configMapKeyRef:
