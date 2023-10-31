@@ -13,7 +13,7 @@ if (!adminUser || !adminUserPassword || !mongoHost) {
 }
 
 // Connect to the admin database with the admin credentials
-const conn = new Mongo(`${mongoHost}`);
+const conn = new Mongo(`${mongoHost}/admin?replicaSet=rs0&ssl=false`);
 const adminDB = conn.getDB(adminDbName);
 const newDB = conn.getDB(newDbName);
 adminDB.auth(adminUser, adminUserPassword);
