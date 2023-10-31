@@ -1,6 +1,6 @@
 const mongoHost =
   "mongodb+srv://mongodb-in-cluster-ps-rs0.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local";
-const mongoPort = 27017;
+// const mongoPort = 27017;
 const adminDbName = "admin";
 const adminUser = process.env.MONGODB_USER_ADMIN_USER;
 const adminUserPassword = process.env.MONGODB_USER_ADMIN_PASSWORD;
@@ -13,7 +13,7 @@ if (!adminUser || !adminUserPassword || !mongoHost) {
 }
 
 // Connect to the admin database with the admin credentials
-const conn = new Mongo(`${mongoHost}:${mongoPort}`);
+const conn = new Mongo(`${mongoHost}`);
 const adminDB = conn.getDB(adminDbName);
 const newDB = conn.getDB(newDbName);
 adminDB.auth(adminUser, adminUserPassword);

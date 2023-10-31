@@ -6,7 +6,7 @@ data:
   init-database.js: |
     const mongoHost =
       "mongodb+srv://mongodb-in-cluster-ps-rs0.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local";
-    const mongoPort = 27017;
+    // const mongoPort = 27017;
     const adminDbName = "admin";
     const adminUser = process.env.MONGODB_DATABASE_ADMIN_USER;
     const adminUserPassword = process.env.MONGODB_DATABASE_ADMIN_PASSWORD;
@@ -19,7 +19,7 @@ data:
     }
 
     // Connect to the admin database with the admin credentials
-    const conn = new Mongo(`${mongoHost}:${mongoPort}`);
+    const conn = new Mongo(`${mongoHost}`);
     const adminDB = conn.getDB(adminDbName);
     const newDB = conn.getDB(newDbName);
     adminDB.auth(adminUser, adminUserPassword);
@@ -58,11 +58,10 @@ data:
     delete_ = db[collectionName].deleteOne({ _id: ObjectId(id.insertedId) });
 
     print(delete_);
-
   init-users.js: |
     const mongoHost =
       "mongodb+srv://mongodb-in-cluster-ps-rs0.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local";
-    const mongoPort = 27017;
+    // const mongoPort = 27017;
     const adminDbName = "admin";
     const adminUser = process.env.MONGODB_USER_ADMIN_USER;
     const adminUserPassword = process.env.MONGODB_USER_ADMIN_PASSWORD;
@@ -75,7 +74,7 @@ data:
     }
 
     // Connect to the admin database with the admin credentials
-    const conn = new Mongo(`${mongoHost}:${mongoPort}`);
+    const conn = new Mongo(`${mongoHost}`);
     const adminDB = conn.getDB(adminDbName);
     const newDB = conn.getDB(newDbName);
     adminDB.auth(adminUser, adminUserPassword);
