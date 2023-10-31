@@ -19,7 +19,7 @@ spec:
     metadata:
       name: "mongodb-{{cluster}}"
       labels:
-        app.kubernetes.io/component: mongodb-operator
+        app.kubernetes.io/component: mongodb
         app.kubernetes.io/name: "mongodb-{{cluster}}"
     spec:
       project: "default"
@@ -27,19 +27,12 @@ spec:
         - repoURL: "git@github.com:ekwisnek/selfhosted.git"
           targetRevision: HEAD
           ref: values
-        # - repoURL: "git@github.com:ekwisnek/selfhosted.git"
-        #   targetRevision: HEAD
-        #   path: kubernetes/apps/percona-mongodb
         - chart: psmdb-db
           repoURL: https://percona.github.io/percona-helm-charts/
           targetRevision: 1.14.3
           helm:
             valueFiles:
               - $values/kubernetes/apps/percona-mongodb/values.yaml
-            # valuesObject:
-            #   custom:
-            #     dbName: "{{dbname}}"
-            #     dbUser: "{{dbuser}}"
         - repoURL: "git@github.com:ekwisnek/selfhosted.git"
           targetRevision: HEAD
           path: kubernetes/apps/percona-mongodb/additional-resources
