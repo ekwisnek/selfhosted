@@ -1,5 +1,5 @@
 const mongoHost =
-  "mongodb+srv://mongodb-in-cluster-ps-rs0.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local";
+  "mongodb+srv://mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local";
 // const mongoPort = 27017;
 const adminDbName = "admin";
 const adminUser = process.env.MONGODB_DATABASE_ADMIN_USER;
