@@ -23,12 +23,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: MONGODB_DATABASE_ADMIN_PASSWORD
-                  name: mongodb-in-cluster-ps-secrets
+                  name: psmdb-secrets
             - name: MONGODB_DATABASE_ADMIN_USER
               valueFrom:
                 secretKeyRef:
                   key: MONGODB_DATABASE_ADMIN_USER
-                  name: mongodb-in-cluster-ps-secrets
+                  name: psmdb-secrets
             - name: MONGODB_DATABASE_NAME
               valueFrom:
                 configMapKeyRef:
@@ -68,12 +68,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: MONGODB_USER_ADMIN_PASSWORD
-                  name: mongodb-in-cluster-ps-secrets
+                  name: psmdb-secrets
             - name: MONGODB_USER_ADMIN_USER
               valueFrom:
                 secretKeyRef:
                   key: MONGODB_USER_ADMIN_USER
-                  name: mongodb-in-cluster-ps-secrets
+                  name: psmdb-secrets
             - name: MONGODB_DATABASE_NAME
               valueFrom:
                 configMapKeyRef:
