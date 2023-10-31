@@ -104,3 +104,6 @@ data:
     } catch (error) {
       console.log(error);
     }
+  DATABASE_USER: "app_user"
+  DATABASE_NAME: "app_database"
+  COLLECTION_NAME: "app_collection"

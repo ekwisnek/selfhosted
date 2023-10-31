@@ -29,6 +29,9 @@ spec:
                 secretKeyRef:
                   key: MONGODB_DATABASE_ADMIN_USER
                   name: mongodb-in-cluster-ps-secrets
+          envFrom:
+            - configMapRef:
+                name: post-sync-cm
           volumeMounts:
             - name: init-scripts
               mountPath: /tmp
@@ -50,6 +53,9 @@ spec:
                 secretKeyRef:
                   key: MONGODB_USER_ADMIN_USER
                   name: mongodb-in-cluster-ps-secrets
+          envFrom:
+            - configMapRef:
+                name: post-sync-cm
           volumeMounts:
             - name: init-scripts
               mountPath: /tmp

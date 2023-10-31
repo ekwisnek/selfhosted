@@ -4,9 +4,8 @@ const mongoPort = 27017;
 const adminDbName = "admin";
 const adminUser = process.env.MONGODB_DATABASE_ADMIN_USER;
 const adminUserPassword = process.env.MONGODB_DATABASE_ADMIN_PASSWORD;
-const newCommonName = "evan";
-const newDbName = "evan";
-const collectionName = "test_collection";
+const newDbName = process.env.DATABASE_NAME;
+const collectionName = process.env.COLLECTION_NAME;
 
 if (!adminUser || !adminUserPassword || !mongoHost) {
   console.error("Missing environment variables for MongoDB connection.");
@@ -19,13 +18,10 @@ const adminDB = conn.getDB(adminDbName);
 const newDB = conn.getDB(newDbName);
 adminDB.auth(adminUser, adminUserPassword);
 
-// Switch to the 'evan' database
-const evanDB = conn.getDB(newDbName);
-
-// Check if the 'evan' database already exists
-if (!evanDB.getName()) {
-  // Create the 'evan' database
-  evanDB.createCollection("exampleCollection"); // You can create an initial collection if needed
+// Check if the 'new' database already exists
+if (!newDB.getName()) {
+  // Create the 'new' database
+  newDB.createCollection("exampleCollection"); // You can create an initial collection if needed
   print(`Database '${newDbName}' created.`);
 } else {
   print(`Database '${newDbName}' already exists.`);

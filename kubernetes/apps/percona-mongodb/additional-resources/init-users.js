@@ -4,8 +4,8 @@ const mongoPort = 27017;
 const adminDbName = "admin";
 const adminUser = process.env.MONGODB_USER_ADMIN_USER;
 const adminUserPassword = process.env.MONGODB_USER_ADMIN_PASSWORD;
-const newCommonName = "evan";
-const newDbName = "evan";
+const newCommonName = process.env.DATABASE_USER;
+const newDbName = process.env.DATABASE_NAME;
 
 if (!adminUser || !adminUserPassword || !mongoHost) {
   console.error("Missing environment variables for MongoDB connection.");
