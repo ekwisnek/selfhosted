@@ -30,13 +30,15 @@ spec:
                   key: MONGODB_DATABASE_ADMIN_USER
                   name: mongodb-in-cluster-ps-secrets
             - name: DATABASE_NAME
-              configMapKeyRef:
-                name: post-sync-cm
-                key: DATABASE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: post-sync-cm
+                  key: DATABASE_NAME
             - name: COLLECTION_NAME
-              configMapKeyRef:
-                name: post-sync-cm
-                key: COLLECTION_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: post-sync-cm
+                  key: COLLECTION_NAME
           volumeMounts:
             - name: init-scripts
               mountPath: /tmp
@@ -59,13 +61,15 @@ spec:
                   key: MONGODB_USER_ADMIN_USER
                   name: mongodb-in-cluster-ps-secrets
             - name: DATABASE_NAME
-              configMapKeyRef:
-                name: post-sync-cm
-                key: DATABASE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: post-sync-cm
+                  key: DATABASE_NAME
             - name: DATABASE_USER
-              configMapKeyRef:
-                name: post-sync-cm
-                key: DATABASE_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: post-sync-cm
+                  key: DATABASE_USER
           volumeMounts:
             - name: init-scripts
               mountPath: /tmp
