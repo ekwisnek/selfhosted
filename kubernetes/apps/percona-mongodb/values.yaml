@@ -17,6 +17,7 @@ image:
 imagePullPolicy: Always
 pmm:
   enabled: false
+secrets: "psmdb-secrets"
 replsets:
   - name: rs0
     size: 3
