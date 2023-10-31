@@ -11,34 +11,39 @@ spec:
     spec:
       serviceAccountName: default
       containers:
-        - name: mongo-client
+        - name: mongo-client-init-database
           image: percona/percona-server-mongodb:6.0.11
           command:
-            # - "/usr/bin/echo"
-            # - "${MONGODB_DATABASE_ADMIN_USER};"
             - "mongosh"
             - "mongodb+srv://$(MONGODB_DATABASE_ADMIN_USER):$(MONGODB_DATABASE_ADMIN_PASSWORD)@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
             - "--eval"
             - "load('/tmp/init-database.js')"
-            - "mongosh"
-            - "mongodb+srv://$(MONGODB_USER_ADMIN_USER):$(MONGODB_USER_ADMIN_PASSWORD)@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
-            - "--eval"
-            - "load('/tmp/init-users.js')"
           env:
             - name: MONGODB_DATABASE_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: MONGODB_DATABASE_ADMIN_PASSWORD
                   name: mongodb-in-cluster-ps-secrets
-            - name: MONGODB_USER_ADMIN_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: MONGODB_USER_ADMIN_PASSWORD
-                  name: mongodb-in-cluster-ps-secrets
             - name: MONGODB_DATABASE_ADMIN_USER
               valueFrom:
                 secretKeyRef:
                   key: MONGODB_DATABASE_ADMIN_USER
+                  name: mongodb-in-cluster-ps-secrets
+          volumeMounts:
+            - name: init-scripts
+              mountPath: /tmp
+        - name: mongo-client-init-users
+          image: percona/percona-server-mongodb:6.0.11
+          command:
+            - "mongosh"
+            - "mongodb+srv://$(MONGODB_USER_ADMIN_USER):$(MONGODB_USER_ADMIN_PASSWORD)@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
+            - "--eval"
+            - "load('/tmp/init-users.js')"
+          env:
+            - name: MONGODB_USER_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: MONGODB_USER_ADMIN_PASSWORD
                   name: mongodb-in-cluster-ps-secrets
             - name: MONGODB_USER_ADMIN_USER
               valueFrom:
