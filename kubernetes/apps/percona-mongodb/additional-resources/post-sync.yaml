@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  generateName: mongodb-user-creation-
+  generateName: mongodb-post-creation-
   annotations:
     argocd.argoproj.io/hook: PostSync
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
@@ -15,12 +15,30 @@ spec:
           image: percona/percona-server-mongodb:6.0.11
           command:
             - "mongosh"
-            - "mongodb+srv://databaseAdmin:wH4qlp7HPOT17iZT@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
+            - "mongodb+srv://databaseAdmin:$MONGODB_DATABASE_ADMIN_PASSWORD@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
             - "--eval"
-            - "use test-db"
+            - "load('init-database.js')"
             - "mongosh"
-            - "mongodb+srv://userAdmin:DWNiVxfa5lygpjb2I@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
+            - "mongodb+srv://userAdmin:$MONGODB_USER_ADMIN_PASSWORD@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
             - "--eval"
-            - "db.getSiblingDB('$external').runCommand({createUser: 'CN=app-user', roles: [{ role: 'dbOwner', db: 'test-db' }], mechanisms:['MONGODB-X509']})"
+            - "load('/tmp/init-users.js')"
+          env:
+            - name: MONGODB_DATABASE_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: MONGODB_DATABASE_ADMIN_PASSWORD
+                  name: mongodb-in-cluster-ps-secrets
+            - name: MONGODB_USER_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: MONGODB_USER_ADMIN_PASSWORD
+                  name: mongodb-in-cluster-ps-secrets
+          volumeMounts:
+            - name: init-scripts
+              mountPath: /tmp
+      volumes:
+        - name: init-scripts
+          configMap:
+            name: post-sync-cm
       restartPolicy: Never
   backoffLimit: 3
