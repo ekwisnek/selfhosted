@@ -1,11 +1,12 @@
-const replSetName = process.env.REPLICASET_NAME;
-const mongoHost =
-  "mongodb+srv://mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local";
+const mongodbSvcName = process.env.MONGODB_SERVICE_NAME;
+const replSetName = process.env.MONGODB_REPLICASET_NAME;
+const k8sNamespace = prcoess.env.K8S_NAMESPACE;
+const mongoHost = `mongodb+srv://${mongodbSvcName}-${replSetName}.${k8sNamespace}.svc.cluster.local`;
 const adminDbName = "admin";
 const adminUser = process.env.MONGODB_DATABASE_ADMIN_USER;
 const adminUserPassword = process.env.MONGODB_DATABASE_ADMIN_PASSWORD;
-const newDbName = process.env.DATABASE_NAME;
-const collectionName = process.env.COLLECTION_NAME;
+const newDbName = process.env.MONGODB_DATABASE_NAME;
+const collectionName = process.env.MONGODB_COLLECTION_NAME;
 
 if (!adminUser || !adminUserPassword || !mongoHost) {
   console.error("Missing environment variables for MongoDB connection.");

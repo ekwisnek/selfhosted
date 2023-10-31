@@ -15,7 +15,7 @@ spec:
           image: percona/percona-server-mongodb:6.0.11
           command:
             - "mongosh"
-            - "mongodb+srv://$(MONGODB_DATABASE_ADMIN_USER):$(MONGODB_DATABASE_ADMIN_PASSWORD)@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
+            - "mongodb+srv://$(MONGODB_DATABASE_ADMIN_USER):$(MONGODB_DATABASE_ADMIN_PASSWORD)@$(MONGODB_SERVICE_NAME)-$(MONGODB_REPLICASET_NAME).$(K8S_NAMESPACE).svc.cluster.local/admin?replicaSet=$(MONGODB_REPLICASET_NAME)&ssl=false"
             - "--eval"
             - "load('/tmp/init-database.js')"
           env:
@@ -29,16 +29,25 @@ spec:
                 secretKeyRef:
                   key: MONGODB_DATABASE_ADMIN_USER
                   name: mongodb-in-cluster-ps-secrets
-            - name: DATABASE_NAME
+            - name: MONGODB_DATABASE_NAME
               valueFrom:
                 configMapKeyRef:
                   name: post-sync-cm
-                  key: DATABASE_NAME
+                  key: MONGODB_DATABASE_NAME
             - name: COLLECTION_NAME
               valueFrom:
                 configMapKeyRef:
                   name: post-sync-cm
                   key: COLLECTION_NAME
+            - name: MONGODB_REPLICASET_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: post-sync-cm
+                  key: MONGODB_REPLICASET_NAME
+            - name: K8S_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
           volumeMounts:
             - name: init-scripts
               mountPath: /tmp
@@ -46,7 +55,7 @@ spec:
           image: percona/percona-server-mongodb:6.0.11
           command:
             - "mongosh"
-            - "mongodb+srv://$(MONGODB_USER_ADMIN_USER):$(MONGODB_USER_ADMIN_PASSWORD)@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
+            - "mongodb+srv://$(MONGODB_USER_ADMIN_USER):$(MONGODB_USER_ADMIN_PASSWORD)@$(MONGODB_SERVICE_NAME)-$(MONGODB_REPLICASET_NAME).$(K8S_NAMESPACE).svc.cluster.local/admin?replicaSet=$(MONGODB_REPLICASET_NAME)&ssl=false"
             - "--eval"
             - "load('/tmp/init-users.js')"
           env:
@@ -60,16 +69,25 @@ spec:
                 secretKeyRef:
                   key: MONGODB_USER_ADMIN_USER
                   name: mongodb-in-cluster-ps-secrets
-            - name: DATABASE_NAME
+            - name: MONGODB_DATABASE_NAME
               valueFrom:
                 configMapKeyRef:
                   name: post-sync-cm
-                  key: DATABASE_NAME
+                  key: MONGODB_DATABASE_NAME
             - name: DATABASE_USER
               valueFrom:
                 configMapKeyRef:
                   name: post-sync-cm
                   key: DATABASE_USER
+            - name: MONGODB_REPLICASET_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: post-sync-cm
+                  key: MONGODB_REPLICASET_NAME
+            - name: K8S_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
           volumeMounts:
             - name: init-scripts
               mountPath: /tmp
