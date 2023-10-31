@@ -105,5 +105,5 @@ spec:
         - name: init-scripts
           configMap:
             name: post-sync-cm
-      restartPolicy: Never
+      restartPolicy: OnFailure
   backoffLimit: 10
