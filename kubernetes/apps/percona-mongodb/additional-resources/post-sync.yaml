@@ -15,11 +15,11 @@ spec:
           image: percona/percona-server-mongodb:6.0.11
           command:
             - "mongosh"
-            - "mongodb+srv://databaseAdmin:$MONGODB_DATABASE_ADMIN_PASSWORD@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
+            - "mongodb+srv://databaseAdmin:${MONGODB_DATABASE_ADMIN_PASSWORD}@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
             - "--eval"
             - "load('/tmp/init-database.js')"
             - "mongosh"
-            - "mongodb+srv://userAdmin:$MONGODB_USER_ADMIN_PASSWORD@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
+            - "mongodb+srv://userAdmin:${MONGODB_USER_ADMIN_PASSWORD}@mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local/admin?replicaSet=rs0&ssl=false"
             - "--eval"
             - "load('/tmp/init-users.js')"
           env:
