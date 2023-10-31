@@ -1,5 +1,8 @@
-const mongoHost =
-  "mongodb-in-cluster-ps-rs0-0.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local,mongodb-in-cluster-ps-rs0-1.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local,mongodb-in-cluster-ps-rs0-2.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local";
+const mongoHost = [
+  "mongodb-in-cluster-ps-rs0-0.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local",
+  "mongodb-in-cluster-ps-rs0-1.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local",
+  "mongodb-in-cluster-ps-rs0-2.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local",
+];
 const mongoPort = 27017;
 const adminDbName = "admin";
 const adminUser = process.env.MONGODB_USER_ADMIN_USER;
