@@ -19,7 +19,7 @@ spec:
           ports:
             - containerPort: 9216
           args:
-            - "--mongodb.uri=mongodb+srv://mongodb_exporter:password@$(MONGODB_SERVICE_NAME)-$(MONGODB_REPLICASET_NAME).$(K8S_NAMESPACE).svc.cluster.local/admin?replicaSet=$(MONGODB_REPLICASET_NAME)&ssl=false"
+            - "--mongodb.uri=mongodb://mongodb_exporter:password@$(MONGODB_SERVICE_NAME)-$(MONGODB_REPLICASET_NAME).$(K8S_NAMESPACE).svc.cluster.local/admin?replicaSet=$(MONGODB_REPLICASET_NAME)&ssl=false"
             - "--mongodb.collstats-colls=$(MONGODB_DATABASE_NAME).$(MONGODB_COLLECTION_NAME)"
             - "--log.level=debug"
             - "--collect-all"
