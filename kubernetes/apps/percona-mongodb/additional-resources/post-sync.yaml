@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  generateName: mongodb-post-creation-
+  generateName: mongodb-post-creation
   annotations:
     argocd.argoproj.io/hook: PostSync
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
@@ -105,5 +105,5 @@ spec:
         - name: init-scripts
           configMap:
             name: post-sync-cm
-      restartPolicy: OnFailure
+      restartPolicy: Never
   backoffLimit: 10
