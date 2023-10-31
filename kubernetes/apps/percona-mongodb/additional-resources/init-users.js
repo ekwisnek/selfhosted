@@ -1,6 +1,6 @@
 const mongodbSvcName = process.env.MONGODB_SERVICE_NAME;
 const replSetName = process.env.MONGODB_REPLICASET_NAME;
-const k8sNamespace = prcoess.env.K8S_NAMESPACE;
+const k8sNamespace = process.env.K8S_NAMESPACE;
 const mongoHost = `mongodb+srv://${mongodbSvcName}-${replSetName}.${k8sNamespace}.svc.cluster.local`;
 const adminDbName = "admin";
 const adminUser = process.env.MONGODB_USER_ADMIN_USER;
