@@ -106,4 +106,4 @@ spec:
           configMap:
             name: post-sync-cm
       restartPolicy: Never
-  backoffLimit: 3
+  backoffLimit: 10
