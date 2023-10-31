@@ -19,8 +19,8 @@ spec:
           ports:
             - containerPort: 9216
           args:
-            - "--mongodb.uri=mongodb://mongodb_exporter:password@mongodb-in-cluster-ps-rs0.km-mongodb-operator.svc.cluster.local:27017"
-            - "--mongodb.collstats-colls=test.test"
+            - "--mongodb.uri=mongodb+srv://mongodb_exporter:password@$(MONGODB_SERVICE_NAME)-$(MONGODB_REPLICASET_NAME).$(K8S_NAMESPACE).svc.cluster.local/admin?replicaSet=$(MONGODB_REPLICASET_NAME)&ssl=false"
+            - "--mongodb.collstats-colls=$(MONGODB_DATABASE_NAME).$(MONGODB_COLLECTION_NAME)"
             - "--log.level=debug"
             - "--collect-all"
           resources:
@@ -30,6 +30,31 @@ spec:
             limits:
               cpu: 500m
               memory: 512Mi
+          env:
+            - name: MONGODB_DATABASE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: post-sync-cm
+                  key: MONGODB_DATABASE_NAME
+            - name: MONGODB_COLLECTION_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: post-sync-cm
+                  key: MONGODB_COLLECTION_NAME
+            - name: MONGODB_REPLICASET_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: post-sync-cm
+                  key: MONGODB_REPLICASET_NAME
+            - name: MONGODB_SERVICE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: post-sync-cm
+                  key: MONGODB_SERVICE_NAME
+            - name: K8S_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
 ---
 apiVersion: v1
 kind: Service
