@@ -4,11 +4,8 @@ metadata:
   name: post-sync-cm
 data:
   init-database.js: |
-    const mongoHost = [
-    "mongodb-in-cluster-ps-rs0-0.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local",
-    "mongodb-in-cluster-ps-rs0-1.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local",
-    "mongodb-in-cluster-ps-rs0-2.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local",
-    ];
+    const mongoHost =
+      "mongodb+srv://mongodb-in-cluster-ps-rs0.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local";
     const mongoPort = 27017;
     const adminDbName = "admin";
     const adminUser = process.env.MONGODB_DATABASE_ADMIN_USER;
@@ -61,12 +58,10 @@ data:
     delete_ = db[collectionName].deleteOne({ _id: ObjectId(id.insertedId) });
 
     print(delete_);
+
   init-users.js: |
-    const mongoHost = [
-    "mongodb-in-cluster-ps-rs0-0.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local",
-    "mongodb-in-cluster-ps-rs0-1.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local",
-    "mongodb-in-cluster-ps-rs0-2.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local",
-    ];
+    const mongoHost =
+      "mongodb+srv://mongodb-in-cluster-ps-rs0.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local";
     const mongoPort = 27017;
     const adminDbName = "admin";
     const adminUser = process.env.MONGODB_USER_ADMIN_USER;
