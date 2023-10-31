@@ -44,6 +44,11 @@ spec:
                 configMapKeyRef:
                   name: post-sync-cm
                   key: MONGODB_REPLICASET_NAME
+            - name: MONGODB_SERVICE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: post-sync-cm
+                  key: MONGODB_SERVICE_NAME
             - name: K8S_NAMESPACE
               valueFrom:
                 fieldRef:
@@ -84,6 +89,11 @@ spec:
                 configMapKeyRef:
                   name: post-sync-cm
                   key: MONGODB_REPLICASET_NAME
+            - name: MONGODB_SERVICE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: post-sync-cm
+                  key: MONGODB_SERVICE_NAME
             - name: K8S_NAMESPACE
               valueFrom:
                 fieldRef:
