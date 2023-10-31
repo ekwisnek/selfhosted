@@ -5,14 +5,13 @@ metadata:
 data:
   init-database.js: |
     const mongoHost =
-      "mongodb-in-cluster-ps-rs0-0.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local";
+      "mongodb-in-cluster-ps-rs0-0.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local,mongodb-in-cluster-ps-rs0-1.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local,mongodb-in-cluster-ps-rs0-2.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local";
     const mongoPort = 27017;
     const adminDbName = "admin";
     const adminUser = process.env.MONGODB_DATABASE_ADMIN_USER;
     const adminUserPassword = process.env.MONGODB_DATABASE_ADMIN_PASSWORD;
-    const newCommonName = "evan";
-    const newDbName = "evan";
-    const collectionName = "test_collection";
+    const newDbName = process.env.DATABASE_NAME;
+    const collectionName = process.env.COLLECTION_NAME;
 
     if (!adminUser || !adminUserPassword || !mongoHost) {
       console.error("Missing environment variables for MongoDB connection.");
@@ -25,13 +24,10 @@ data:
     const newDB = conn.getDB(newDbName);
     adminDB.auth(adminUser, adminUserPassword);
 
-    // Switch to the 'evan' database
-    const evanDB = conn.getDB(newDbName);
-
-    // Check if the 'evan' database already exists
-    if (!evanDB.getName()) {
-      // Create the 'evan' database
-      evanDB.createCollection("exampleCollection"); // You can create an initial collection if needed
+    // Check if the 'new' database already exists
+    if (!newDB.getName()) {
+      // Create the 'new' database
+      newDB.createCollection("exampleCollection"); // You can create an initial collection if needed
       print(`Database '${newDbName}' created.`);
     } else {
       print(`Database '${newDbName}' already exists.`);
@@ -62,16 +58,15 @@ data:
     delete_ = db[collectionName].deleteOne({ _id: ObjectId(id.insertedId) });
 
     print(delete_);
-
   init-users.js: |
     const mongoHost =
-       "mongodb-in-cluster-ps-rs0-0.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local";
+      "mongodb-in-cluster-ps-rs0-0.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local,mongodb-in-cluster-ps-rs0-1.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local,mongodb-in-cluster-ps-rs0-2.mongodb-in-cluster-ps-rs0.mongodb.svc.cluster.local";
     const mongoPort = 27017;
     const adminDbName = "admin";
     const adminUser = process.env.MONGODB_USER_ADMIN_USER;
     const adminUserPassword = process.env.MONGODB_USER_ADMIN_PASSWORD;
-    const newCommonName = "evan";
-    const newDbName = "evan";
+    const newCommonName = process.env.DATABASE_USER;
+    const newDbName = process.env.DATABASE_NAME;
 
     if (!adminUser || !adminUserPassword || !mongoHost) {
       console.error("Missing environment variables for MongoDB connection.");
