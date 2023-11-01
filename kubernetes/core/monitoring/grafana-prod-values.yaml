@@ -84,7 +84,10 @@ livenessProbe:
 # schedulerName: "default-scheduler"
 
 image:
-  repository: docker.io/grafana/grafana
+  # -- The Docker registry
+  registry: docker.io
+  # -- Docker image repository
+  repository: grafana/grafana
   # Overrides the Grafana image tag whose default is the chart appVersion
   tag: ""
   sha: ""
@@ -342,11 +345,11 @@ extraContainerVolumes: []
 ##
 persistence:
   type: pvc
-  enabled: true
+  enabled: false
   storageClassName: rook-ceph-rwx
   accessModes:
     - ReadWriteMany
-  size: 2Gi
+  size: 5Gi
   # annotations: {}
   finalizers:
     - kubernetes.io/pvc-protection
