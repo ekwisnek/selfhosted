@@ -165,7 +165,7 @@ persistence:
   storageClass: ""
   volumeName: ""
   accessMode: ReadWriteOnce
-  size: 50Gi
+  size: 5Gi
 
   ## If subPath is set mount a sub folder of a volume instead of the root of the volume.
   ## This is especially handy for volume plugins that don't natively support sub mounting (like glusterfs).
@@ -267,7 +267,7 @@ podLabels: {}
 ##
 resources:
   requests:
-    memory: 256Mi
+    memory: 128Mi
 
 ## List of policies to be created after minio install
 ##
