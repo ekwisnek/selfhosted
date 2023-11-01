@@ -16,8 +16,10 @@ spec:
           nodeSelector: "kubernetes.io/os: linux"
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: eraser
+    namespace: eraser-system
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
