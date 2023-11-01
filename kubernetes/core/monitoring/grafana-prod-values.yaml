@@ -343,7 +343,7 @@ extraContainerVolumes: []
 persistence:
   type: pvc
   enabled: true
-  # storageClassName: default
+  storageClassName: rook-ceph-rwx
   accessModes:
     - ReadWriteMany
   size: 2Gi
