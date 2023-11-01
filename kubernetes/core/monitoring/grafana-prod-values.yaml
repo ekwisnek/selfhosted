@@ -226,7 +226,7 @@ hostAliases:
   #   hostnames:
   #     - "my.host.com"
 ingress:
-  enabled: true
+  enabled: false
   annotations:
     nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
     cert-manager.io/cluster-issuer: letsencrypt
