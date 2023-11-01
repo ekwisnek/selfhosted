@@ -378,8 +378,8 @@ initChownData:
   ## initChownData container image
   ##
   image:
-    repository: docker.io/library/busybox
-    tag: "1.31.1"
+    repository: docker.io/busybox
+    tag: "latest"
     sha: ""
     pullPolicy: IfNotPresent
 
