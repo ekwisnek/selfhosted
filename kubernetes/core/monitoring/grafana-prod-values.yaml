@@ -230,10 +230,11 @@ ingress:
   annotations:
     nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
     cert-manager.io/cluster-issuer: letsencrypt
-  ingressClassName: nginx
+    kubernetes.io/ingress.class: nginx
   hosts:
-    - host: grafana.ctrlplane.net
-  paths: /
+    - grafana.ctrlplane.net
+  path: /
+  pathType: Prefix
   tls:
     - hosts:
         - grafana.ctrlplane.net
