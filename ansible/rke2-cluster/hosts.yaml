@@ -1,12 +1,17 @@
 ---
 all:
   hosts:
+    localhost:
+      ansible_connection: local
+      ansible_python_interpret: /usr/bin/python3
     rke2-prod-cp-01:
       ansible_host: 192.168.1.31
     rke2-prod-cp-02:
-      ansible_host: 192.168.1.32
+      ansible_host: 192.168.1.8
     rke2-prod-cp-03:
       ansible_host: 192.168.1.33
+    # rke2-prod-cp-04:
+    #   ansible_host: 192.168.1.8
     rke2-prod-wk-01:
       ansible_host: 192.168.1.41
     rke2-prod-wk-02:
@@ -17,15 +22,26 @@ all:
       ansible_host: 192.168.1.44
     rke2-prod-wk-05:
       ansible_host: 192.168.1.45
-rke2_control_plane:
+    rke2-prod-api-lb:
+      ansible_host: 192.168.1.30
+
+lb:
+  hosts:
+    rke2-prod-api-lb:
+      ansible_host: 192.168.1.30
+
+control_plane:
   hosts:
     rke2-prod-cp-01:
       ansible_host: 192.168.1.31
     rke2-prod-cp-02:
-      ansible_host: 192.168.1.32
+      ansible_host: 192.168.1.8
     rke2-prod-cp-03:
       ansible_host: 192.168.1.33
-rke2_worker:
+    # rke2-prod-cp-04:
+    #   ansible_host: 192.168.1.8
+
+worker:
   hosts:
     rke2-prod-wk-01:
       ansible_host: 192.168.1.41
@@ -37,7 +53,3 @@ rke2_worker:
       ansible_host: 192.168.1.44
     rke2-prod-wk-05:
       ansible_host: 192.168.1.45
-rke2_cluster:
-  children:
-    rke2_control_plane:
-    rke2_worker:
