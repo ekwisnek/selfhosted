@@ -100,8 +100,11 @@ image:
 
 testFramework:
   enabled: true
-  image: docker.io/bats/bats
-  tag: "v1.4.1"
+  image:
+    # -- The Docker registry
+    registry: docker.io
+    repository: bats/bats
+    tag: "v1.4.1"
   imagePullPolicy: IfNotPresent
   securityContext: {}
 
