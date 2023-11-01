@@ -237,10 +237,10 @@ global:
     - name: MINIO_ACCESS_KEY_ID
       valueFrom:
         secretKeyRef:
-          name: minio
+          name: mimir-minio-credentials
           key: rootUser
     - name: MINIO_SECRET_ACCESS_KEY
       valueFrom:
         secretKeyRef:
-          name: minio
+          name: mimir-minio-credentials
           key: rootPassword
