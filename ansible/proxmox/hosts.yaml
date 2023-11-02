@@ -1,0 +1,9 @@
+---
+all:
+  hosts:
+    prox-01:
+      ansible_host: 192.168.1.91
+    prox-02:
+      ansible_host: 192.168.1.92
+    prox-03:
+      ansible_host: 192.168.1.93

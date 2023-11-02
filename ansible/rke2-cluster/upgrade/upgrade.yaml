@@ -38,7 +38,9 @@
       ansible.builtin.shell:
         cmd: |
           set -o pipefail
-          curl -sfL https://get.rke2.io | INSTALL_RKE2_CHANNEL={{ rke2_release_track }} sh -
+          curl -sfL https://get.rke2.io | \
+          INSTALL_RKE2_CHANNEL={{ rke2_release_track }} sh -
+        changed_when: false
       when: current_version.resources[0].status.nodeInfo.kubeletVersion != stable_version
 
 - name: Upgrade workers

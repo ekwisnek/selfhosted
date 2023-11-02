@@ -13,7 +13,8 @@ spec:
     helm:
       valuesObject:
         deploy:
-          nodeSelector: "kubernetes.io/os=linux"
+          nodeSelector:
+            kubernetes.io/os: linux
   destination:
     server: "https://kubernetes.default.svc"
     namespace: eraser-system

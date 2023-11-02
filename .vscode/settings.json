@@ -1,9 +1,7 @@
 {
   "yaml.schemas": {
     "kubernetes://schema/ceph.rook.io/v1@cephcluster": "file:///home/ekwisnek/git/selfhosted/kubernetes/core/rook-ceph/cluster.yaml",
-    "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook": [
-      "file:///home/ekwisnek/git/selfhosted/ansible/upgrade/upgrade.yaml"
-    ]
+    "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook": "file:///home/ekwisnek/git/selfhosted/ansible/proxmox/deploy.yaml"
   },
   "ansible.python.interpreterPath": "/bin/python3"
 }

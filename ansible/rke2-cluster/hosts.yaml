@@ -10,8 +10,6 @@ all:
       ansible_host: 192.168.1.8
     rke2-prod-cp-03:
       ansible_host: 192.168.1.33
-    # rke2-prod-cp-04:
-    #   ansible_host: 192.168.1.8
     rke2-prod-wk-01:
       ansible_host: 192.168.1.41
     rke2-prod-wk-02:
@@ -38,8 +36,6 @@ control_plane:
       ansible_host: 192.168.1.8
     rke2-prod-cp-03:
       ansible_host: 192.168.1.33
-    # rke2-prod-cp-04:
-    #   ansible_host: 192.168.1.8
 
 worker:
   hosts:
@@ -53,3 +49,8 @@ worker:
       ansible_host: 192.168.1.44
     rke2-prod-wk-05:
       ansible_host: 192.168.1.45
+
+rke2_cluster:
+  children:
+    control_plane:
+    worker:
