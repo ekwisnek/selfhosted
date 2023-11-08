@@ -8,9 +8,6 @@ spec:
   destination:
     server: "https://kubernetes.default.svc"
     namespace: nats
-  syncPolicy:
-      syncOptions:
-      - CreateNamespace=true
   sources:
   - repoURL: "https://nats-io.github.io/k8s/helm/charts/"
     chart: nats
@@ -21,3 +18,10 @@ spec:
   - repoURL: "git@github.com:ekwisnek/selfhosted.git"
     targetRevision: main
     ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

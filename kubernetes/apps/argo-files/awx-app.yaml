@@ -5,12 +5,16 @@ metadata:
   namespace: argocd
 spec:
   project: "default"
-  destination:
-    server: "https://kubernetes.default.svc"
-    namespace: awx
-  syncPolicy:
-    syncOptions:
-      - CreateNamespace=true
   source:
     repoURL: "git@github.com:ekwisnek/selfhosted.git"
     path: kubernetes/apps/awx
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: awx
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+        - CreateNamespace=true
+        - ServerSideApply=true

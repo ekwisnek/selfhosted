@@ -19,9 +19,11 @@ spec:
   syncPolicy:
     automated:
       prune: true
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
       - RespectIgnoreDifferences=true
+      - ServerSideApply=true
   destination:
     namespace: vault
     server: https://kubernetes.default.svc
