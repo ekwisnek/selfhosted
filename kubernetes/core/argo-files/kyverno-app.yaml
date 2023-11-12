@@ -14,12 +14,30 @@ spec:
       valuesObject:
         admissionController:
           replicas: 3
+          # container:
+          #   extraArgs:
+          #     - --enablePolicyException=true
         backgroundController:
           replicas: 2
         cleanupController:
           replicas: 2
         reportsController:
           replicas: 2
+        config:
+          webhooks:
+            # Exclude namespaces
+            - namespaceSelector:
+                matchExpressions:
+                  - key: kubernetes.io/metadata.name
+                    operator: NotIn
+                    values:
+                      - kube-system
+                      - kyverno
+            # Exclude objects
+            - objectSelector:
+                matchExpressions:
+                  - key: webhooks.kyverno.io/exclude
+                    operator: DoesNotExist
   destination:
     server: "https://kubernetes.default.svc"
     namespace: kyverno
