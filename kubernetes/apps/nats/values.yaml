@@ -21,20 +21,19 @@ config:
     fileStore:
       enabled: true
       pvc:
-        storageClassName: rook-ceph-block 
+        storageClassName: rook-ceph-block
         size: "10Gi"
   merge:
     accounts:
       $SYS:
         users:
-        - user: sys
-          pass: sys
+          - user: sys
+            pass: sys
       ctrlplane:
         jetstream: true
         users:
-        - user: ctrl
-          pass: plane
+          - user: ctrl
+            pass: plane
     system_account: "$SYS"
 promExporter:
   enabled: true
-
