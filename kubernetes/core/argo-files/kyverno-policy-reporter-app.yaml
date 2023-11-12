@@ -2,24 +2,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kyverno
+  name: policy-reporter
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: "https://kyverno.github.io/kyverno"
-    targetRevision: 3.0.6
-    chart: kyverno
+    repoURL: "https://kyverno.github.io/policy-reporter"
+    targetRevision: 2.21.1
+    chart: policy-reporter
     helm:
       valuesObject:
-        admissionController:
-          replicas: 3
-        backgroundController:
-          replicas: 2
-        cleanupController:
-          replicas: 2
-        reportsController:
-          replicas: 2
+        metrics:
+          enabled: true
+        rest:
+          enabled: true
+        ui:
+          enabled: true
   destination:
     server: "https://kubernetes.default.svc"
     namespace: kyverno

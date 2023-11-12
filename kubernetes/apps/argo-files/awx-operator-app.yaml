@@ -5,17 +5,17 @@ metadata:
   namespace: argocd
 spec:
   project: "default"
-  sources:
-    - repoURL: "https://ansible.github.io/awx-operator/"
-      chart: awx-operator
-      targetRevision: 2.7.1
+  source:
+    repoURL: "https://ansible.github.io/awx-operator/"
+    chart: awx-operator
+    targetRevision: 2.7.1
   destination:
     server: "https://kubernetes.default.svc"
     namespace: awx
-    syncPolicy:
-      automated:
-        prune: true
-        selfHeal: true
-      syncOptions:
-        - CreateNamespace=true
-        - ServerSideApply=true
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
