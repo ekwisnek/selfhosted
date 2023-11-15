@@ -1,24 +1,59 @@
 ---
 - name: Virtual Machine Creation
   hosts: localhost
+  vars_files:
+    - proxmox-credentials.yaml
+    - virtual-machines.yaml
+
   vars:
-    proxmox_root_password: |
-      $ANSIBLE_VAULT;1.2;AES256;self-hosted
-      34666336373463323766626435363664633966613231316338306636623830356261313135643966
-      6637356234623739316338636232626132343363386431650a366163643462353962656637613162
-      38346535376663356565333232653561303666303830326632396562383438373638396534663165
-      3131383564306130310a663064353563363231613630386163313739353761393134323233663861
-      3933
+    update: false
 
   tasks:
-    - name: Create a VM
+    - name: Create control plane nodes
       community.general.proxmox_kvm:
         api_user: root@pam
-        api_password: "R0ck3t_R@CcOON!"
-        api_host: 192.168.1.91
-        name: talos-test-01
-        node: prox-03
+        api_password: "{{ proxmox_root_password }}"
+        api_host: 192.168.1.94
+        vmid: "{{ item.vmid }}"
+        name: "{{ item.name }}"
+        node: prox-04
+        onboot: true
         cores: 2
         vcpus: 1
+        cpu: host
+        update: "{{ update | default('false') }}"
         memory: 2048
         balloon: 0
+        sata:
+          sata0: "local-zfs:20,format=raw"
+        net:
+          net0: "virtio,bridge=vmbr0,rate=1000"
+        ide: '{"ide0":"local:iso/metal-amd64.iso,media=cdrom"}'
+      loop: "{{ virtual_machines.control_plane }}"
+      loop_control:
+        label: "{{ item.name }}"
+
+    - name: Create worker nodes
+      community.general.proxmox_kvm:
+        api_user: root@pam
+        api_password: "{{ proxmox_root_password }}"
+        api_host: 192.168.1.94
+        vmid: "{{ item.vmid }}"
+        name: "{{ item.name }}"
+        node: prox-04
+        onboot: true
+        cores: 2
+        vcpus: 1
+        cpu: host
+        update: "{{ update | default('false') }}"
+        memory: 2048
+        balloon: 0
+        sata:
+          sata0: "local-zfs:20,format=raw"
+          sata1: "sata-ssd:200,format=raw"
+        net:
+          net0: "virtio,bridge=vmbr0,rate=1000"
+        ide: '{"ide0":"local:iso/metal-amd64.iso,media=cdrom"}'
+      loop: "{{ virtual_machines.workers }}"
+      loop_control:
+        label: "{{ item.name }}"
