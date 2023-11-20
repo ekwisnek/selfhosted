@@ -80,6 +80,7 @@ resource "talos_machine_configuration_apply" "controlplane" {
     templatefile("configs/controlplane.yaml", {
       talos_virtual_ip = var.talos_virtual_ip
     }),
+    # Uncomment this line to disable Flannel and Kube Proxy for Cilium
     # var.talos_disable_flannel ? templatefile("configs/disable_flannel.yaml", {}) : null
   ]
 }
