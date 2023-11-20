@@ -1,0 +1,74 @@
+---
+- hosts: all
+  tasks:
+    - include_role:
+        name: install_base_packages
+        apply:
+          tags:
+            - install_base_packages
+      tags:
+        - install_base_packages
+
+    - include_role:
+        name: create_user
+        apply:
+          tags:
+            - create_user
+      tags:
+        - create_user
+
+    - include_role:
+        name: install_postfix
+        apply:
+          tags:
+            - install_postfix
+      tags:
+        - install_postfix
+
+    - include_role:
+        name: install_sanoid
+        apply:
+          tags:
+            - install_sanoid
+      tags:
+        - install_sanoid
+
+    - include_role:
+        name: install_unattended_upgrades
+        apply:
+          tags:
+            - install_unattended_upgrades
+      tags:
+        - install_unattended_upgrades
+
+    - include_role:
+        name: configure_zed
+        apply:
+          tags:
+            - configure_zed
+      tags:
+        - configure_zed
+
+    - include_role:
+        name: enable_iommu
+        apply:
+          tags:
+            - enable_iommu
+      tags:
+        - enable_iommu
+
+    - include_role:
+        name: install_nfs_server
+        apply:
+          tags:
+            - install_nfs_server
+      tags:
+        - install_nfs_server
+
+    - include_role:
+        name: configure_cluster
+        apply:
+          tags:
+            - configure_cluster
+      tags:
+        - configure_cluster

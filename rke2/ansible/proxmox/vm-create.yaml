@@ -1,0 +1,59 @@
+---
+- name: Virtual Machine Creation
+  hosts: localhost
+  vars_files:
+    - proxmox-credentials.yaml
+    - virtual-machines.yaml
+
+  vars:
+    update: false
+
+  tasks:
+    - name: Create control plane nodes
+      community.general.proxmox_kvm:
+        api_user: root@pam
+        api_password: "{{ proxmox_root_password }}"
+        api_host: 192.168.1.94
+        vmid: "{{ item.vmid }}"
+        name: "{{ item.name }}"
+        node: prox-04
+        onboot: true
+        cores: 2
+        vcpus: 1
+        cpu: host
+        update: "{{ update | default('false') }}"
+        memory: 2048
+        balloon: 0
+        sata:
+          sata0: "local-zfs:20,format=raw"
+        net:
+          net0: "virtio,bridge=vmbr0,rate=1000"
+        ide: '{"ide0":"local:iso/metal-amd64.iso,media=cdrom"}'
+      loop: "{{ virtual_machines.control_plane }}"
+      loop_control:
+        label: "{{ item.name }}"
+
+    - name: Create worker nodes
+      community.general.proxmox_kvm:
+        api_user: root@pam
+        api_password: "{{ proxmox_root_password }}"
+        api_host: 192.168.1.94
+        vmid: "{{ item.vmid }}"
+        name: "{{ item.name }}"
+        node: prox-04
+        onboot: true
+        cores: 2
+        vcpus: 1
+        cpu: host
+        update: "{{ update | default('false') }}"
+        memory: 2048
+        balloon: 0
+        sata:
+          sata0: "local-zfs:20,format=raw"
+          sata1: "sata-ssd:200,format=raw"
+        net:
+          net0: "virtio,bridge=vmbr0,rate=1000"
+        ide: '{"ide0":"local:iso/metal-amd64.iso,media=cdrom"}'
+      loop: "{{ virtual_machines.workers }}"
+      loop_control:
+        label: "{{ item.name }}"

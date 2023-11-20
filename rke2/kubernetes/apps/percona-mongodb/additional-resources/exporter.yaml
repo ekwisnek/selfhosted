@@ -1,0 +1,77 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mongodb-exporter
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mongodb-exporter
+    spec:
+      containers:
+        - name: mongodb-exporter
+          image: percona/mongodb_exporter:0.39.0
+          ports:
+            - containerPort: 9216
+          args:
+            - "--mongodb.uri=mongodb://mongodb_exporter:password@$(MONGODB_SERVICE_NAME)-$(MONGODB_REPLICASET_NAME).$(K8S_NAMESPACE).svc.cluster.local/admin?replicaSet=$(MONGODB_REPLICASET_NAME)&ssl=false"
+            - "--mongodb.collstats-colls=$(MONGODB_DATABASE_NAME).$(MONGODB_COLLECTION_NAME)"
+            - "--log.level=debug"
+            - "--collect-all"
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          env:
+            - name: MONGODB_DATABASE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: post-sync-cm
+                  key: MONGODB_DATABASE_NAME
+            - name: MONGODB_COLLECTION_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: post-sync-cm
+                  key: MONGODB_COLLECTION_NAME
+            - name: MONGODB_REPLICASET_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: post-sync-cm
+                  key: MONGODB_REPLICASET_NAME
+            - name: MONGODB_SERVICE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: post-sync-cm
+                  key: MONGODB_SERVICE_NAME
+            - name: K8S_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-exporter
+  annotations:
+    metrics.agent.grafana.com/scrape: "true"
+    probes.agent.grafana.com/probe: "true"
+    probes.agent.grafana.com/module: "http_2xx"
+    probes.agent.grafana.com/port: "9216"
+    probes.agent.grafana.com/path: "/metrics"
+spec:
+  selector:
+    app.kubernetes.io/name: mongodb-exporter
+  type: ClusterIP
+  ports:
+    - name: metrics
+      protocol: TCP
+      port: 9216
+      targetPort: 9216

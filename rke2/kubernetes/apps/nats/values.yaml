@@ -1,0 +1,39 @@
+config:
+  cluster:
+    enabled: true
+    replicas: 3
+  resources:
+    requests:
+      cpu: 250m
+      memory: 128Mi
+    limits:
+      cpu: 1000m
+      memory: 512Mi
+  jetstream:
+    enabled: true
+    encryption:
+      secret:
+        name: "nats-jetstream-encryption-key"
+        key: "jsKey"
+    memoryStore:
+      enabled: true
+      size: "500MGi"
+    fileStore:
+      enabled: true
+      pvc:
+        storageClassName: rook-ceph-block
+        size: "10Gi"
+  merge:
+    accounts:
+      $SYS:
+        users:
+          - user: sys
+            pass: sys
+      ctrlplane:
+        jetstream: true
+        users:
+          - user: ctrl
+            pass: plane
+    system_account: "$SYS"
+promExporter:
+  enabled: true

@@ -1,0 +1,86 @@
+---
+- name: Upgrade control-plane nodes
+  hosts: control_plane
+  become: true
+  serial: 1
+
+  pre_tasks:
+    - name: Check RKE2 release API for current stable version
+      ansible.builtin.uri:
+        url: https://update.rke2.io/v1-release/channels
+      register: release_api
+
+  vars:
+    rke2_release_track: "stable"
+
+  tasks:
+    - name: Grab current stable version
+      ansible.builtin.set_fact:
+        stable_version: "{{ release_api.json.data | selectattr('id', 'eq', 'stable') | map(attribute='latest') | first }}"
+
+    - name: Debug version
+      ansible.builtin.debug:
+        var: stable_version
+        verbosity: 2
+
+    - name: Check current Kubernetes version
+      kubernetes.core.k8s_info:
+        context: default
+        kind: node
+        name: "{{ ansible_hostname }}"
+        kubeconfig: ~/.kube/config
+      register: current_version
+      delegate_to: localhost
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
+
+    - name: Upgrade rke2 server to {{ rke2_release_track }}
+      ansible.builtin.shell:
+        cmd: |
+          set -o pipefail
+          curl -sfL https://get.rke2.io | \
+          INSTALL_RKE2_CHANNEL={{ rke2_release_track }} sh -
+        changed_when: false
+      when: current_version.resources[0].status.nodeInfo.kubeletVersion != stable_version
+
+- name: Upgrade workers
+  hosts: worker
+  become: true
+  serial: 1
+
+  pre_tasks:
+    - name: Check RKE2 release API for current stable version
+      ansible.builtin.uri:
+        url: https://update.rke2.io/v1-release/channels
+      register: release_api
+
+  vars:
+    rke2_release_track: "stable"
+
+  tasks:
+    - name: Grab current stable version
+      ansible.builtin.set_fact:
+        stable_version: "{{ release_api.json.data | selectattr('id', 'eq', 'stable') | map(attribute='latest') | first }}"
+
+    - name: Debug version
+      ansible.builtin.debug:
+        var: stable_version
+        verbosity: 2
+
+    - name: Check current Kubernetes version
+      kubernetes.core.k8s_info:
+        context: default
+        kind: node
+        name: "{{ ansible_hostname }}"
+        kubeconfig: ~/.kube/config
+      register: current_version
+      delegate_to: localhost
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
+
+    - name: Upgrade rke2 agent to {{ rke2_release_track }}
+      ansible.builtin.shell:
+        cmd: |
+          set -o pipefail
+          curl -sfL https://get.rke2.io | INSTALL_RKE2_CHANNEL={{ rke2_release_track }} INSTALL_RKE2_TYPE=agent sh -
+      when: current_version.resources[0].status.nodeInfo.kubeletVersion != stable_version

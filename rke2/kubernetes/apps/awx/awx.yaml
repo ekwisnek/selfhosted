@@ -1,0 +1,10 @@
+---
+apiVersion: awx.ansible.com/v1beta1
+kind: AWX
+metadata:
+  name: awx
+spec:
+  service_type: NodePort
+  # ingress_type: Ingress
+  # hostname: awx.ctrlplane.net
+  postgres_storage_class: rook-ceph-block

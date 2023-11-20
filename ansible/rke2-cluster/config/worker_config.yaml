@@ -1,5 +1,0 @@
-server: https://192.168.1.30:9345
-token: 35bdd89d-e65b-4420-b629-57f06fe5733a
-kubelet-arg:
-  - container-log-max-files=3
-  - container-log-max-size=2Mi

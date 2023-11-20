@@ -1,0 +1,25 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mimir
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: "git@github.com:ekwisnek/selfhosted.git"
+      targetRevision: HEAD
+      ref: values
+    - repoURL: "https://grafana.github.io/helm-charts"
+      targetRevision: 5.1.2
+      chart: mimir-distributed
+      helm:
+        valueFiles:
+          - $values/kubernetes/core/monitoring/mimir-prod-values.yaml
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
