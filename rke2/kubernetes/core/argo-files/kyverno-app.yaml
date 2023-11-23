@@ -40,9 +40,9 @@ spec:
                   matchExpressions:
                     - key: webhooks.kyverno.io/exclude
                       operator: DoesNotExist
-          features:
-            backgroundScan:
-              skipResourceFilters: false
+            features:
+              backgroundScan:
+                skipResourceFilters: false
   destination:
     server: "https://kubernetes.default.svc"
     namespace: kyverno
