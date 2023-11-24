@@ -32,6 +32,15 @@ resource "proxmox_virtual_environment_vm" "workernode" {
     size         = var.workernode_disk_size
   }
 
+  disk {
+    datastore_id = var.workernode_datastore
+    discard      = "on"
+    file_format  = "raw"
+    interface    = "scsi1"
+    size         = var.workernode_additional_disk_size
+    ssd          = true
+  }
+
   agent {
     enabled = true
     # If left to default, Terraform will be held for 15 minutes waiting for the agent to start

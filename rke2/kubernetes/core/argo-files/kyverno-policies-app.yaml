@@ -20,6 +20,7 @@ spec:
     syncOptions:
       - CreateNamespace=true
       - ServerSideApply=true
+      - Replace=true
   ignoreDifferences:
     - group: kyverno.io
       kind: ClusterPolicy

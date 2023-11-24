@@ -1,7 +1,8 @@
 {
   "yaml.schemas": {
     "kubernetes://schema/ceph.rook.io/v1@cephcluster": "file:///home/ekwisnek/git/selfhosted/kubernetes/core/rook-ceph/cluster.yaml",
-    "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook": "file:///home/ekwisnek/git/selfhosted/ansible/proxmox/deploy.yaml"
+    "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook": "file:///home/ekwisnek/git/selfhosted/ansible/proxmox/deploy.yaml",
+    "https://raw.githubusercontent.com/aerleon/aerleon/main/schemas/aerleon-policies.schema.json": "file:///c%3A/Users/evank/git/selfhosted/rke2/kubernetes/core/kyverno/policies/exceptions.yaml"
   },
   "ansible.python.interpreterPath": "/bin/python3"
 }

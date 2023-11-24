@@ -1,15 +1,42 @@
 ---
-apiVersion: kyverno.io/v2alpha1
+apiVersion: kyverno.io/v2beta1
 kind: PolicyException
 metadata:
-  name: cilium-host-ns-exception
-  namespace: kube-system
+  name: global-exceptions
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   exceptions:
+    - policyName: restrict-apparmor-profiles
+      ruleNames:
+        - app-armor
+        - autogen-app-armor
+    - policyName: disallow-host-path
+      ruleNames:
+        - host-path
+        - autogen-host-path
     - policyName: disallow-host-namespaces
       ruleNames:
         - host-namespaces
         - autogen-host-namespaces
+    - policyName: disallow-privileged-containers
+      ruleNames:
+        - privileged-containers
+        - autogen-privileged-containers
+        - autogen-cronjob-privileged-containers
+    - policyName: disallow-capabilities
+      ruleNames:
+        - adding-capabilities
+        - autogen-adding-capabilities
+        - autogen-cronjob-adding-capabilities
+    - policyName: disallow-host-ports
+      ruleNames:
+        - host-ports-none
+        - autogen-host-ports-none
+    - policyName: disallow-selinux
+      ruleNames:
+        - selinux-type
+        - autogen-selinux-type
   match:
     any:
       - resources:
@@ -17,7 +44,10 @@ spec:
             - Pod
             - DaemonSet
             - ReplicaSet
+            - Job
+            - CronJob
+            - Deployment
           namespaces:
             - kube-system
-          names:
-            - important-tool*
+            - kyverno
+            - rook-ceph

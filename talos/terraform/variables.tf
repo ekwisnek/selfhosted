@@ -189,6 +189,12 @@ variable "workernode_disk_size" {
   default     = "20"
   description = "Quantity of disk space (gigabytes) to apply to the workernode virtual machines"
 }
+variable "workernode_additional_disk_size" {
+  # Talos recommends 100Gb
+  type        = string
+  default     = "20"
+  description = "Quantity of disk space (gigabytes) to apply to the workernode virtual machines"
+}
 variable "workernode_network_device" {
   type        = string
   default     = "vmbr0"
