@@ -13,7 +13,7 @@ server:
   resources:
     limits:
       cpu: 100m
-      memory: 128Mi
+      memory: 256Mi
     requests:
       cpu: 50m
       memory: 64Mi
@@ -27,7 +27,7 @@ repoServer:
   resources:
     limits:
       cpu: 100m
-      memory: 128Mi
+      memory: 256Mi
     requests:
       cpu: 50m
       memory: 64Mi

@@ -7,14 +7,14 @@ spec:
   project: "default"
   source:
     repoURL: "git@github.com:ekwisnek/selfhosted.git"
-    path: kubernetes/apps/awx
+    path: rke2/kubernetes/apps/awx
   destination:
     server: "https://kubernetes.default.svc"
     namespace: awx
-    syncPolicy:
-      automated:
-        prune: true
-        selfHeal: true
-      syncOptions:
-        - CreateNamespace=true
-        - ServerSideApply=true
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

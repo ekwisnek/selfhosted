@@ -15,7 +15,7 @@ spec:
       chart: minio
       helm:
         valueFiles:
-          - $values/kubernetes/core/monitoring/minio-prod-values.yaml
+          - $values/rke2/kubernetes/core/monitoring/minio-prod-values.yaml
     - repoURL: "git@github.com:ekwisnek/selfhosted.git"
       targetRevision: HEAD
       path: kubernetes/core/monitoring/additional-resources

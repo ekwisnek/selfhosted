@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: "git@github.com:ekwisnek/selfhosted.git"
     targetRevision: HEAD
-    path: kubernetes/core/monitoring/grafana-agent
+    path: rke2/kubernetes/core/monitoring/grafana-agent
   destination:
     server: "https://kubernetes.default.svc"
     namespace: monitoring

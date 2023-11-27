@@ -15,7 +15,7 @@ spec:
       chart: mimir-distributed
       helm:
         valueFiles:
-          - $values/kubernetes/core/monitoring/mimir-prod-values.yaml
+          - $values/rke2/kubernetes/core/monitoring/mimir-prod-values.yaml
   destination:
     server: "https://kubernetes.default.svc"
     namespace: monitoring

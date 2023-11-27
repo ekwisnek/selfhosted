@@ -32,10 +32,10 @@ spec:
           targetRevision: 1.14.3
           helm:
             valueFiles:
-              - $values/kubernetes/apps/percona-mongodb/values.yaml
+              - $values/rke2/kubernetes/apps/percona-mongodb/values.yaml
         - repoURL: "git@github.com:ekwisnek/selfhosted.git"
           targetRevision: HEAD
-          path: kubernetes/apps/percona-mongodb/additional-resources
+          path: rke2/kubernetes/apps/percona-mongodb/additional-resources
       destination:
         server: "{{url}}"
         namespace: mongodb
