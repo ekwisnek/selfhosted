@@ -24,7 +24,7 @@ spec:
     spec:
       project: "default"
       sources:
-        - repoURL: "git@github.com:ekwisnek/selfhosted.git"
+        - repoURL: "https://github.com/ekwisnek/selfhosted"
           targetRevision: HEAD
           ref: values
         - chart: psmdb-db
@@ -33,7 +33,7 @@ spec:
           helm:
             valueFiles:
               - $values/rke2/kubernetes/apps/percona-mongodb/values.yaml
-        - repoURL: "git@github.com:ekwisnek/selfhosted.git"
+        - repoURL: "https://github.com/ekwisnek/selfhosted"
           targetRevision: HEAD
           path: rke2/kubernetes/apps/percona-mongodb/additional-resources
       destination:

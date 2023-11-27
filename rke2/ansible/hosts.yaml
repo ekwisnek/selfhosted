@@ -20,6 +20,10 @@ all:
       ansible_host: 192.168.1.44
     rke2-prod-wk-05:
       ansible_host: 192.168.1.45
+    rke2-prod-wk-06:
+      ansible_host: 192.168.1.34
+    rke2-prod-wk-07:
+      ansible_host: 192.168.1.35
     rke2-prod-api-lb:
       ansible_host: 192.168.1.30
 
@@ -49,6 +53,10 @@ worker:
       ansible_host: 192.168.1.44
     rke2-prod-wk-05:
       ansible_host: 192.168.1.45
+    rke2-prod-wk-06:
+      ansible_host: 192.168.1.34
+    rke2-prod-wk-07:
+      ansible_host: 192.168.1.35
 
 rke2_cluster:
   children:

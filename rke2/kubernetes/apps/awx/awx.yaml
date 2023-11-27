@@ -5,6 +5,6 @@ metadata:
   name: awx
 spec:
   service_type: NodePort
-  # ingress_type: Ingress
-  # hostname: awx.ctrlplane.net
+  ingress_type: Ingress
+  hostname: awx.ctrlplane.net
   postgres_storage_class: rook-ceph-block

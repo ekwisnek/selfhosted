@@ -15,7 +15,7 @@ spec:
       helm:
         valueFiles:
           - $values/rke2/kubernetes/apps/nats/values.yaml
-    - repoURL: "git@github.com:ekwisnek/selfhosted.git"
+    - repoURL: "https://github.com/ekwisnek/selfhosted"
       targetRevision: main
       ref: values
   syncPolicy:

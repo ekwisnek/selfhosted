@@ -22,7 +22,7 @@ spec:
     spec:
       project: "default"
       sources:
-        - repoURL: "git@github.com:ekwisnek/selfhosted.git"
+        - repoURL: "https://github.com/ekwisnek/selfhosted"
           targetRevision: HEAD
           ref: values
         - chart: psmdb-operator

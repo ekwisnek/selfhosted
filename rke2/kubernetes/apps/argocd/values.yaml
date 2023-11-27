@@ -7,29 +7,29 @@ server:
   autoscaling:
     enabled: true
     minReplicas: 2
-    maxReplicas: 5
+    maxReplicas: 7
     targetCPUUtilizationPercentage: 50
     targetMemoryUtilizationPercentage: 50
   resources:
     limits:
-      cpu: 100m
+      cpu: 1000m
       memory: 256Mi
     requests:
-      cpu: 50m
+      cpu: 500m
       memory: 64Mi
 repoServer:
   autoscaling:
     enabled: true
     minReplicas: 2
-    maxReplicas: 5
+    maxReplicas: 7
     targetCPUUtilizationPercentage: 50
     targetMemoryUtilizationPercentage: 50
   resources:
     limits:
-      cpu: 100m
+      cpu: 1000m
       memory: 256Mi
     requests:
-      cpu: 50m
+      cpu: 500m
       memory: 64Mi
 applicationSet:
   replicaCount: 2
