@@ -6,5 +6,8 @@ metadata:
 spec:
   service_type: NodePort
   ingress_type: Ingress
+  ingress_annotations: |
+    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
+    cert-manager.io/cluster-issuer: letsencrypt
   hostname: awx.ctrlplane.net
   postgres_storage_class: rook-ceph-block
