@@ -6,7 +6,8 @@ metadata:
 spec:
   service_type: NodePort
   ingress_type: Ingress
-  ingress_tls_secret: vault-ctrlplane-net-web-cert
+  ingress_tls_secret: awx-ctrlplane-net-web-cert
+  ingress_path: /
   ingress_annotations: |
     nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
     cert-manager.io/cluster-issuer: letsencrypt
