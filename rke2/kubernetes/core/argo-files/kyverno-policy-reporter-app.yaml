@@ -12,12 +12,19 @@ spec:
     chart: policy-reporter
     helm:
       valuesObject:
+        global:
+          plugins:
+            kyverno: true
+        kyvernoPlugin:
+          enabled: true
         metrics:
           enabled: true
+        replicaCount: 3
         rest:
           enabled: true
         ui:
           enabled: true
+        worker: 10
   destination:
     server: "https://kubernetes.default.svc"
     namespace: kyverno

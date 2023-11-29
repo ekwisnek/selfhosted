@@ -5,6 +5,8 @@ metadata:
   name: awx
 spec:
   service_type: NodePort
+  image: quay.io/ansible/awx
+  image_version: 23.5.0
   ingress_type: Ingress
   ingress_tls_secret: awx-ctrlplane-net-web-cert
   ingress_path: /
@@ -13,3 +15,6 @@ spec:
     cert-manager.io/cluster-issuer: letsencrypt
   hostname: awx.ctrlplane.net
   postgres_storage_class: rook-ceph-block
+  postgres_image: postgres:12
+  redis_image: docker.io/redis
+  redis_image_version: 7.2.3
