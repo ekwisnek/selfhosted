@@ -12,6 +12,7 @@ spec:
     helm:
       valuesObject:
         replicas: 3
+        singleNamespace: false
   destination:
     server: "https://kubernetes.default.svc"
     namespace: percona-postgres-operator
