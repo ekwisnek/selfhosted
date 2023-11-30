@@ -10,7 +10,7 @@ metadata:
   namespace: postgres-operator
 spec:
   targetNamespaces:
-    - postgres-operator
+    - postgres
 ---
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
