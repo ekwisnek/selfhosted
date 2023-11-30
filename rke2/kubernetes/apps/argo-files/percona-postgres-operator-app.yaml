@@ -7,7 +7,7 @@ spec:
   project: "default"
   source:
     repoURL: "git@github.com:ekwisnek/selfhosted.git"
-    path: rke2/kubernetes/apps/percona/postgres-operator
+    path: rke2/kubernetes/apps/percona-postgres-operator
   destination:
     server: "https://kubernetes.default.svc"
     namespace: postgres-operator
