@@ -4,6 +4,8 @@ metadata:
   name: mongo-client-cert
   namespace: mongodb
 spec:
+  additionalOutputFormats:
+    - type: CombinedPEM
   commonName: app_user
   dnsNames:
     - app_user

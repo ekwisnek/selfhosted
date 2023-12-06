@@ -6,25 +6,53 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
-    repoURL: "https://kyverno.github.io/policy-reporter"
-    targetRevision: 2.21.1
-    chart: policy-reporter
-    helm:
-      valuesObject:
-        global:
-          plugins:
-            kyverno: true
-        kyvernoPlugin:
-          enabled: true
-        metrics:
-          enabled: true
-        replicaCount: 3
-        rest:
-          enabled: true
-        ui:
-          enabled: true
-        worker: 10
+  sources:
+    - repoURL: "https://kyverno.github.io/policy-reporter"
+      targetRevision: 2.21.1
+      chart: policy-reporter
+      helm:
+        valuesObject:
+          global:
+            plugins:
+              kyverno: true
+          kyvernoPlugin:
+            enabled: true
+          metrics:
+            enabled: true
+          replicaCount: 3
+          rest:
+            enabled: true
+          ui:
+            enabled: true
+            redis:
+              enabled: true
+              address: "policy-reporter-redis-headless:6379"
+              database: 0
+              prefix: "policy-reporter-ui"
+              username: ""
+              password: "password"
+            resources:
+              limits:
+                cpu: 1000m
+                memory: 512Mi
+              requests:
+                cpu: 500m
+                memory: 256Mi
+          worker: 10
+    - repoURL: "https://charts.bitnami.com/bitnami"
+      targetRevision: 18.4.0
+      chart: redis
+      helm:
+        valuesObject:
+          image:
+            registry: docker.io
+            repository: bitnami/redis
+            tag: 7.2.3-debian-11-r1
+          nameOverride: policy-reporter-redis
+          fullnameOverride: policy-reporter-redis
+          auth:
+            enabled: true
+            password: password
   destination:
     server: "https://kubernetes.default.svc"
     namespace: kyverno

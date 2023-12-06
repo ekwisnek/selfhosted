@@ -49,6 +49,8 @@ metadata:
   name: prometheus
   namespace: nats
 spec:
+  remoteWrite:
+    - url: http:/mimir-gateway.monitoring.svc.cluster.local:8080
   serviceAccountName: prometheus
   serviceMonitorSelector:
     matchLabels:
@@ -65,7 +67,7 @@ spec:
   storage:
     volumeClaimTemplate:
       spec:
-        storageClassName: longhorn
+        storageClassName: rook-ceph-block
         resources:
           requests:
             storage: 10Gi

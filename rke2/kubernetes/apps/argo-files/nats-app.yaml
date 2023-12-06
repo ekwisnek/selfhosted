@@ -4,6 +4,12 @@ metadata:
   name: nats
   namespace: argocd
 spec:
+  ignoreDifferences:
+    - group: apps
+      kind: StatefulSet
+      name: nats
+      jqPathExpressions:
+        - ".spec.volumeClaimTemplates[]?"
   project: "default"
   destination:
     server: "https://kubernetes.default.svc"
@@ -24,4 +30,3 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-      - ServerSideApply=true
