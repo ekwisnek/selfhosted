@@ -18,7 +18,7 @@ spec:
           - $values/rke2/kubernetes/core/monitoring/minio-prod-values.yaml
     - repoURL: "git@github.com:ekwisnek/selfhosted.git"
       targetRevision: HEAD
-      path: kubernetes/core/monitoring/additional-resources
+      path: rke2/kubernetes/core/monitoring/additional-resources
   destination:
     server: "https://kubernetes.default.svc"
     namespace: monitoring
