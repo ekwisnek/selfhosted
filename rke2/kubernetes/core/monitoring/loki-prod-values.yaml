@@ -611,7 +611,7 @@ monitoring:
 # Configuration for the write pod(s)
 write:
   # -- Number of replicas for the write
-  replicas: 1
+  replicas: 5
   image:
     # -- The Docker registry for the write image. Overrides `loki.image.registry`
     registry: null
@@ -690,7 +690,7 @@ write:
 # Configuration for the table-manager
 tableManager:
   # -- Specifies whether the table-manager should be enabled
-  enabled: false
+  enabled: true
   image:
     # -- The Docker registry for the table-manager image. Overrides `loki.image.registry`
     registry: null
@@ -747,14 +747,14 @@ tableManager:
 # Configuration for the read pod(s)
 read:
   # -- Number of replicas for the read
-  replicas: 1
+  replicas: 3
   autoscaling:
     # -- Enable autoscaling for the read, this is only used if `queryIndex.enabled: true`
-    enabled: false
+    enabled: true
     # -- Minimum autoscaling replicas for the read
-    minReplicas: 1
+    minReplicas: 3
     # -- Maximum autoscaling replicas for the read
-    maxReplicas: 3
+    maxReplicas: 7
     # -- Target CPU utilisation percentage for the read
     targetCPUUtilizationPercentage: 60
     # -- Target memory utilisation percentage for the read
@@ -821,13 +821,13 @@ read:
     # If set to "-", storageClassName: "", which disables dynamic provisioning.
     # If empty or set to null, no storageClassName spec is
     # set, choosing the default provisioner (gp2 on AWS, standard on GKE, AWS, and OpenStack).
-    storageClass: null
+    storageClass: rook-ceph-block
     # -- Selector for persistent disk
     selector: null
 # Configuration for the backend pod(s)
 backend:
   # -- Number of replicas for the backend
-  replicas: 1
+  replicas: 3
   image:
     # -- The Docker registry for the backend image. Overrides `loki.image.registry`
     registry: null
@@ -888,7 +888,7 @@ backend:
     # If set to "-", storageClassName: "", which disables dynamic provisioning.
     # If empty or set to null, no storageClassName spec is
     # set, choosing the default provisioner (gp2 on AWS, standard on GKE, AWS, and OpenStack).
-    storageClass: null
+    storageClass: rook-ceph-block
     # -- Selector for persistent disk
     selector: null
 # Configuration for the single binary node(s)
@@ -1019,16 +1019,16 @@ gateway:
   # -- Specifies whether the gateway should be enabled
   enabled: true
   # -- Number of replicas for the gateway
-  replicas: 1
+  replicas: 3
   # -- Enable logging of 2xx and 3xx HTTP requests
   verboseLogging: true
   autoscaling:
     # -- Enable autoscaling for the gateway
-    enabled: false
+    enabled: true
     # -- Minimum autoscaling replicas for the gateway
-    minReplicas: 1
+    minReplicas: 3
     # -- Maximum autoscaling replicas for the gateway
-    maxReplicas: 3
+    maxReplicas: 7
     # -- Target CPU utilisation percentage for the gateway
     targetCPUUtilizationPercentage: 60
     # -- Target memory utilisation percentage for the gateway

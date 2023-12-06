@@ -5,6 +5,22 @@ metadata:
   name: loki
   namespace: argocd
 spec:
+  ignoreDifferences:
+    - group: apps
+      kind: StatefulSet
+      name: loki-backend
+      jqPathExpressions:
+        - ".spec.persistentVolumeClaimRetentionPolicy?"
+    - group: apps
+      kind: StatefulSet
+      name: loki-backend
+      jqPathExpressions:
+        - ".spec.volumeClaimTemplates[]?"
+    - group: monitoring.grafana.com/v1alpha1
+      kind: PodLogs
+      name: loki
+      jqPathExpressions:
+        - ".spec.relabelings[]?"
   project: default
   sources:
     - repoURL: "git@github.com:ekwisnek/selfhosted.git"
@@ -26,3 +42,4 @@ spec:
     syncOptions:
       - CreateNamespace=true
       - ServerSideApply=true
+      - RespectIgnoreDifferences=true
