@@ -32,3 +32,8 @@ spec:
       kind: "MutatingWebhookConfiguration"
       jqPathExpressions:
         - .webhooks[].clientConfig.caBundle
+    - group: apps
+      kind: StatefulSet
+      name: vault
+      jqPathExpressions:
+        - ".spec.volumeClaimTemplates[]?"

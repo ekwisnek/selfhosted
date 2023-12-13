@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: strimzi-operator
+  namespace: argocd
+spec:
+  project: "default"
+  sources:
+    - repoURL: "https://strimzi.io/charts/"
+      chart: strimzi-kafka-operator
+      targetRevision: 0.38.0
+      helm:
+        valueFiles:
+          - $values/rke2/kubernetes/apps/nats/values.yaml
+    - repoURL: "git@github.com:ekwisnek/selfhosted.git"
+      path: rke2/kubernetes/apps/strimzi
+      ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: strimzi-kafka-operator
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

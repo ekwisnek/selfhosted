@@ -2,7 +2,7 @@
 redis-ha:
   enabled: true
 controller:
-  replicas: 1
+  replicas: 3
 server:
   autoscaling:
     enabled: true
@@ -12,11 +12,11 @@ server:
     targetMemoryUtilizationPercentage: 50
   resources:
     limits:
-      cpu: 1000m
-      memory: 256Mi
+      cpu: 400m
+      memory: 512Mi
     requests:
-      cpu: 500m
-      memory: 64Mi
+      cpu: 100m
+      memory: 256Mi
 repoServer:
   autoscaling:
     enabled: true
@@ -26,10 +26,10 @@ repoServer:
     targetMemoryUtilizationPercentage: 50
   resources:
     limits:
-      cpu: 1000m
-      memory: 256Mi
+      cpu: 400m
+      memory: 1Gi
     requests:
-      cpu: 500m
-      memory: 64Mi
+      cpu: 100m
+      memory: 512Mi
 applicationSet:
   replicaCount: 2
