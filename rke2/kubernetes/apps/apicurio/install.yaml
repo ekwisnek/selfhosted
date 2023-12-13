@@ -4827,6 +4827,7 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: apicurio-registry-operator-role
+  namespace: apicurio-registry-operator
 subjects:
   - kind: ServiceAccount
     name: apicurio-registry-operator
