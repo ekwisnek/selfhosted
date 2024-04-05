@@ -24,11 +24,11 @@ server:
   dataStorage:
     enabled: true
     size: 10Gi
-    storageClass: rook-ceph-block
+    storageClass: ceph-block
   auditStorage:
     enabled: true
     size: 10Gi
-    storageClass: rook-ceph-block
+    storageClass: ceph-block
   ha:
     enabled: true
     replicas: 3
