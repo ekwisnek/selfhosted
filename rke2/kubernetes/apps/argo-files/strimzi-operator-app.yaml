@@ -12,7 +12,7 @@ spec:
       helm:
         valueFiles:
           - $values/rke2/kubernetes/apps/strimzi-operator/values.yaml
-    - repoURL: "git@github.com:ekwisnek/selfhosted.git"
+    - repoURL: "https://github.com/ekwisnek/selfhosted"
       ref: values
   destination:
     server: "https://kubernetes.default.svc"

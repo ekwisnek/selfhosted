@@ -13,7 +13,7 @@ spec:
       helm:
         valueFiles:
           - $values/rke2/kubernetes/apps/vault/values.yaml
-    - repoURL: "git@github.com:ekwisnek/selfhosted.git"
+    - repoURL: "https://github.com/ekwisnek/selfhosted.git"
       targetRevision: HEAD
       ref: values
   syncPolicy:

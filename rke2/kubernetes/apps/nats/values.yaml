@@ -1,4 +1,8 @@
 config:
+  nats:
+    tls:
+      enabled: true
+      secretName: nats-ctrlplane-net-tls
   cluster:
     enabled: true
     replicas: 3
@@ -11,29 +15,68 @@ config:
       memory: 512Mi
   jetstream:
     enabled: true
-    encryption:
-      secret:
-        name: "nats-jetstream-encryption-key"
-        key: "jsKey"
     memoryStore:
       enabled: true
-      size: "500MGi"
+      size: "512Mi"
     fileStore:
       enabled: true
       pvc:
-        storageClassName: rook-ceph-block
+        storageClassName: ceph-block
         size: "10Gi"
+  resolver: 
+    enabled: true
+    merge:
+      type: full
+      allow_delete: false
+      interval: "2m"
+      timeout: "1.9s"
   merge:
-    accounts:
-      $SYS:
-        users:
-          - user: sys
-            pass: sys
-      ctrlplane:
-        jetstream: true
-        users:
-          - user: ctrl
-            pass: plane
-    system_account: "$SYS"
+    operator: eyJ0eXAiOiJKV1QiLCJhbGciOiJlZDI1NTE5LW5rZXkifQ.eyJqdGkiOiJQTFlDRlU0VkJHSFVKSkI2TkJIQUZaUVFJWVdHSUg0VDRDWFpJT01CRkFJWlA2Q0RUWFJBIiwiaWF0IjoxNzEyMzU4NzkxLCJpc3MiOiJPREFKUVhDU09WVzRVWkNDVU9PVzNVNlZGN0lVS0xRVU8zVUpYT0o2REFXQUFCT1FWWE1RWkc3MyIsIm5hbWUiOiJjdHJscGxhbmUiLCJzdWIiOiJPREFKUVhDU09WVzRVWkNDVU9PVzNVNlZGN0lVS0xRVU8zVUpYT0o2REFXQUFCT1FWWE1RWkc3MyIsIm5hdHMiOnsic2lnbmluZ19rZXlzIjpbIk9BUUlNVkFEM0pYTTRLS1dFVjdGT1laMktHVjVEMlFIVUo1Wk5VTUlNQ05UU01FNExXV1ZVM1hYIl0sImFjY291bnRfc2VydmVyX3VybCI6Im5hdHM6Ly9uYXRzLmN0cmxwbGFuZS5uZXQ6NDIyMiIsInN5c3RlbV9hY2NvdW50IjoiQUFUWVJWM0REWEZLR0lIUlFINTY1RElEREVIVFM3R0FCVEFSUjVVU0hRR0pDUVBRTldPUUgyRE0iLCJzdHJpY3Rfc2lnbmluZ19rZXlfdXNhZ2UiOnRydWUsInR5cGUiOiJvcGVyYXRvciIsInZlcnNpb24iOjJ9fQ.S7jV3WCdGmha_X3mEH9siK3fAoQ6o2BCcTZPKTuWsHDu6hJwkjnGQSaReo0fPIQUUdhiE_IE5HsvmjmRYluKDg
+    system_account: AATYRV3DDXFKGIHRQH565DIDDEHTS7GABTARR5USHQGJCQPQNWOQH2DM
+    resolver_preload:
+      AATYRV3DDXFKGIHRQH565DIDDEHTS7GABTARR5USHQGJCQPQNWOQH2DM: eyJ0eXAiOiJKV1QiLCJhbGciOiJlZDI1NTE5LW5rZXkifQ.eyJqdGkiOiJXVkEyTVpFVlFMUVc1MkhPREFNUE1BSUc1NldQTzNIVUhOWDRLWEJNTllLSFUzRDZNTTRBIiwiaWF0IjoxNzEyMzUzMjk0LCJpc3MiOiJPQVFJTVZBRDNKWE00S0tXRVY3Rk9ZWjJLR1Y1RDJRSFVKNVpOVU1JTUNOVFNNRTRMV1dWVTNYWCIsIm5hbWUiOiJTWVMiLCJzdWIiOiJBQVRZUlYzRERYRktHSUhSUUg1NjVESURERUhUUzdHQUJUQVJSNVVTSFFHSkNRUFFOV09RSDJETSIsIm5hdHMiOnsiZXhwb3J0cyI6W3sibmFtZSI6ImFjY291bnQtbW9uaXRvcmluZy1zdHJlYW1zIiwic3ViamVjdCI6IiRTWVMuQUNDT1VOVC4qLlx1MDAzZSIsInR5cGUiOiJzdHJlYW0iLCJhY2NvdW50X3Rva2VuX3Bvc2l0aW9uIjozLCJkZXNjcmlwdGlvbiI6IkFjY291bnQgc3BlY2lmaWMgbW9uaXRvcmluZyBzdHJlYW0iLCJpbmZvX3VybCI6Imh0dHBzOi8vZG9jcy5uYXRzLmlvL25hdHMtc2VydmVyL2NvbmZpZ3VyYXRpb24vc3lzX2FjY291bnRzIn0seyJuYW1lIjoiYWNjb3VudC1tb25pdG9yaW5nLXNlcnZpY2VzIiwic3ViamVjdCI6IiRTWVMuUkVRLkFDQ09VTlQuKi4qIiwidHlwZSI6InNlcnZpY2UiLCJyZXNwb25zZV90eXBlIjoiU3RyZWFtIiwiYWNjb3VudF90b2tlbl9wb3NpdGlvbiI6NCwiZGVzY3JpcHRpb24iOiJSZXF1ZXN0IGFjY291bnQgc3BlY2lmaWMgbW9uaXRvcmluZyBzZXJ2aWNlcyBmb3I6IFNVQlNaLCBDT05OWiwgTEVBRlosIEpTWiBhbmQgSU5GTyIsImluZm9fdXJsIjoiaHR0cHM6Ly9kb2NzLm5hdHMuaW8vbmF0cy1zZXJ2ZXIvY29uZmlndXJhdGlvbi9zeXNfYWNjb3VudHMifV0sImxpbWl0cyI6eyJzdWJzIjotMSwiZGF0YSI6LTEsInBheWxvYWQiOi0xLCJpbXBvcnRzIjotMSwiZXhwb3J0cyI6LTEsIndpbGRjYXJkcyI6dHJ1ZSwiY29ubiI6LTEsImxlYWYiOi0xfSwic2lnbmluZ19rZXlzIjpbIkFDS09EQTMyVU5HWkcyN0lLN1Q0VjNORU41SExVRVJSNTZHQkhGRkFOTFgzTlZXM0c2VFNVUERSIl0sImRlZmF1bHRfcGVybWlzc2lvbnMiOnsicHViIjp7fSwic3ViIjp7fX0sImF1dGhvcml6YXRpb24iOnt9LCJ0eXBlIjoiYWNjb3VudCIsInZlcnNpb24iOjJ9fQ.RE5Anz7taFqf-COuYTRd07k4PAigvGIM1y7NBDusvfuhguYaRCqmMqy0KfaqPoFGoAZkUuamioAcpW698mvmAg
+podTemplate:
+  topologySpreadConstraints:
+    kubernetes.io/hostname:
+      maxSkew: 1
+      whenUnsatisfiable: DoNotSchedule
 promExporter:
   enabled: true
+extraResources:
+  - apiVersion: cert-manager.io/v1
+    kind: Certificate
+    metadata:
+      name: nats-ctrlplane-net-tls
+      namespace: nats
+    spec:
+      secretName: nats-ctrlplane-net-tls
+      duration: 2160h # 90d
+      renewBefore: 360h # 15d
+      subject:
+        organizations:
+          - ctrlplane
+      commonName: nats.ctrlplane.net
+      privateKey:
+        algorithm: ECDSA
+      usages:
+        - server auth
+        - client auth
+      dnsNames:
+        - nats.ctrlplane.net
+      issuerRef:
+        name: letsencrypt
+        kind: ClusterIssuer
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: my-service
+    spec:
+      type: NodePort
+      selector:
+        app.kubernetes.io/component: nats
+        app.kubernetes.io/instance: nats
+        app.kubernetes.io/name: nats
+      ports:
+        - port: 4222
+          targetPort: 4222
+          nodePort: 31222
