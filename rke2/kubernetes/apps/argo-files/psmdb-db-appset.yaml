@@ -11,7 +11,7 @@ spec:
     - list:
         elements:
           - cluster: in-cluster
-            storageclass: rook-ceph-block
+            storageclass: ceph-block
             url: https://kubernetes.default.svc
             # dbname: test-db
             # dbuser: app-user
