@@ -1,3 +1,4 @@
 kubernetes/apps/nats/secrets.yaml
 kubernetes/apps/semaphore/secrets.yaml
 *.env
+*.ACTUAL
