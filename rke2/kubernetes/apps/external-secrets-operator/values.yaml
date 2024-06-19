@@ -1,0 +1,4 @@
+replicaCount: 3
+image:
+  pullPolicy: Always
+leaderElect: true
