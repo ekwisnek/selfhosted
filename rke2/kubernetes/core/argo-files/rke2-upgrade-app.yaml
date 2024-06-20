@@ -10,6 +10,8 @@ spec:
     - repoURL: "https://github.com/ekwisnek/selfhosted"
       targetRevision: HEAD
       path: "rke2/kubernetes/core/rke2-upgrade"
+      directory:
+        exclude: upgrade.yaml
   destination:
     server: "https://kubernetes.default.svc"
     namespace: system-upgrade
