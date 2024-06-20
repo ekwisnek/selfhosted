@@ -1,0 +1,21 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rke2-upgrade
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: "https://github.com/ekwisnek/selfhosted"
+      targetRevision: HEAD
+      path: "rke2/kubernetes/core/rke2-upgrade"
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: system-upgrade
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
