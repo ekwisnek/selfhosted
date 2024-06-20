@@ -24,9 +24,8 @@ spec:
   cordon: true
   #  drain:
   #    force: true
-  # upgrade:
-  #   image: rancher/rke2-upgrade
-  # version: v1.26.6+rke2r1
+  upgrade:
+    image: rancher/rke2-upgrade
   channel: https://update.rke2.io/v1-release/channels/stable
 ---
 # Agent plan
@@ -60,7 +59,6 @@ spec:
   cordon: true
   drain:
     force: true
-  # upgrade:
-  #   image: rancher/rke2-upgrade
-  # version: v1.26.6+rke2r1
+  upgrade:
+    image: rancher/rke2-upgrade
   channel: https://update.rke2.io/v1-release/channels/stable
