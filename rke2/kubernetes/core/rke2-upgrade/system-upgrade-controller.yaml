@@ -69,15 +69,16 @@ spec:
           image: rancher/system-upgrade-controller:v0.13.4
           imagePullPolicy: IfNotPresent
           securityContext:
-            runAsNonRoot: true
-            runAsUser: 65534
-            runAsGroup: 65534
-            allowPrivilegeEscalation: false
-            seccompProfile: 
-              type: RuntimeDefault
-            capabilities:
-              drop:
-                - ALL
+            privileged: true
+            # runAsNonRoot: true
+            # runAsUser: 65534
+            # runAsGroup: 65534
+            # allowPrivilegeEscalation: false
+            # seccompProfile: 
+            #   type: RuntimeDefault
+            # capabilities:
+            #   drop:
+            #     - ALL
           envFrom:
             - configMapRef:
                 name: default-controller-env
