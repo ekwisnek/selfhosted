@@ -2,6 +2,8 @@
 apiVersion: upgrade.cattle.io/v1
 kind: Plan
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
   name: server-plan
   namespace: system-upgrade
   labels:
@@ -31,6 +33,8 @@ spec:
 apiVersion: upgrade.cattle.io/v1
 kind: Plan
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
   name: agent-plan
   namespace: system-upgrade
   labels:
