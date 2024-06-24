@@ -6,15 +6,24 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
-    repoURL: "https://charts.jetstack.io"
-    targetRevision: v1.13.1
-    chart: cert-manager
-    helm:
-      valuesObject:
-        featureGates: "AdditionalCertificateOutputFormats=true"
-        webhook:
+  sources:
+    - repoURL: "https://charts.jetstack.io"
+      targetRevision: v1.15.0
+      chart: cert-manager
+      helm:
+        valuesObject:
           featureGates: "AdditionalCertificateOutputFormats=true"
+          disableAutoApproval: true
+          webhook:
+            featureGates: "AdditionalCertificateOutputFormats=true"
+    - repoURL: "https://charts.jetstack.io"
+      targetRevision: v0.14.1
+      chart: cert-manager-approver-policy
+    - repoURL: "https://github.com/ekwisnek/selfhosted"
+      targetRevision: HEAD
+      path: "rke2/kubernetes/core/cert-manager"
+      directory:
+        exclude: cloudflare-secret.yaml
   destination:
     server: "https://kubernetes.default.svc"
     namespace: cert-manager

@@ -10,3 +10,4 @@ cni: cilium
 kubelet-arg:
   - container-log-max-files=3
   - container-log-max-size=2Mi
+with-node-id: true

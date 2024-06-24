@@ -1,4 +1,4 @@
-server: https://192.168.1.30:9345
+server: https://192.168.1.100:9345
 token: 35bdd89d-e65b-4420-b629-57f06fe5733a
 tls-san:
   - 100.94.21.26
@@ -11,3 +11,4 @@ cni: cilium
 kubelet-arg:
   - container-log-max-files=3
   - container-log-max-size=2Mi
+with-node-id: true

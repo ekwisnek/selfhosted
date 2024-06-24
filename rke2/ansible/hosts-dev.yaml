@@ -1,0 +1,60 @@
+---
+all:
+  hosts:
+    localhost:
+      ansible_connection: local
+      ansible_python_interpret: /usr/bin/python3
+    rke2-dev-cp-01:
+      ansible_host: 192.168.1.101
+    rke2-dev-cp-02:
+      ansible_host: 192.168.1.102
+    rke2-dev-cp-03:
+      ansible_host: 192.168.1.102
+    rke2-dev-wk-01:
+      ansible_host: 192.168.1.201
+    rke2-dev-wk-02:
+      ansible_host: 192.168.1.202
+    rke2-dev-wk-03:
+      ansible_host: 192.168.1.203
+    rke2-dev-wk-04:
+      ansible_host: 192.168.1.204
+    rke2-dev-wk-05:
+      ansible_host: 192.168.1.205
+    rke2-dev-wk-06:
+      ansible_host: 192.168.1.205
+    rke2-dev-api-lb:
+      ansible_host: 192.168.1.100
+
+lb:
+  hosts:
+    rke2-dev-api-lb:
+      ansible_host: 192.168.1.100
+
+control_plane:
+  hosts:
+    rke2-dev-cp-01:
+      ansible_host: 192.168.1.101
+    rke2-dev-cp-02:
+      ansible_host: 192.168.1.102
+    rke2-dev-cp-03:
+      ansible_host: 192.168.1.103
+
+worker:
+  hosts:
+    rke2-dev-wk-01:
+      ansible_host: 192.168.1.201
+    rke2-dev-wk-02:
+      ansible_host: 192.168.1.202
+    rke2-dev-wk-03:
+      ansible_host: 192.168.1.203
+    rke2-dev-wk-04:
+      ansible_host: 192.168.1.204
+    rke2-dev-wk-05:
+      ansible_host: 192.168.1.205
+    rke2-dev-wk-06:
+      ansible_host: 192.168.1.206
+
+rke2_cluster:
+  children:
+    control_plane:
+    worker:

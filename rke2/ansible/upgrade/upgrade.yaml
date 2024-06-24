@@ -11,7 +11,7 @@
       register: release_api
 
   vars:
-    rke2_release_track: "stable"
+    rke2_release_track: "v1.27"
 
   tasks:
     - name: Grab current stable version
@@ -55,12 +55,12 @@
       register: release_api
 
   vars:
-    rke2_release_track: "stable"
+    rke2_release_track: "v1.27"
 
   tasks:
     - name: Grab current stable version
       ansible.builtin.set_fact:
-        stable_version: "{{ release_api.json.data | selectattr('id', 'eq', 'stable') | map(attribute='latest') | first }}"
+        stable_version: "{{ release_api.json.data | selectattr('id', 'eq', 'v1.27') | map(attribute='latest') | first }}"
 
     - name: Debug version
       ansible.builtin.debug:

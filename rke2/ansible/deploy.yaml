@@ -1,6 +1,6 @@
 ---
 - name: User setup
-  hosts: all
+  hosts: rke2_cluster
   remote_user: root
 
   tasks:
@@ -14,15 +14,15 @@
       ansible.posix.authorized_key:
         user: ekwisnek
         state: present
-        key: "{{ lookup('file', '/home/ekwisnek/.ssh/id_ecdsa.pub') }}"
+        key: "{{ lookup('file', '/Users/section31-64/.ssh/id_ecdsa.pub') }}"
     - name: Add ssh key[s]
       ansible.posix.authorized_key:
         user: root
         state: present
-        key: "{{ lookup('file', '/home/ekwisnek/.ssh/id_ecdsa.pub') }}"
+        key: "{{ lookup('file', '/Users/section31-64/.ssh/id_ecdsa.pub') }}"
 
 - name: Initialialize primary control plane
-  hosts: rke2-prod-cp-01
+  hosts: rke2-dev-cp-01
   become: true
 
   tasks:
