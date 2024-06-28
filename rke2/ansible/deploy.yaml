@@ -21,49 +21,49 @@
         state: present
         key: "{{ lookup('file', '/Users/section31-64/.ssh/id_ecdsa.pub') }}"
 
-- name: Initialialize primary control plane
-  hosts: rke2-dev-cp-01
-  become: true
+# - name: Initialialize primary control plane
+#   hosts: rke2-dev-cp-01
+#   become: true
 
-  tasks:
-    - name: Make directory
-      ansible.builtin.file:
-        path: /etc/rancher/rke2/
-        state: directory
-        mode: "0700"
-    - name: Place config
-      ansible.builtin.copy:
-        src: config/primary_config.yaml
-        dest: /etc/rancher/rke2/config.yaml
-        mode: "0600"
-    - name: Disable firewalld
-      ansible.builtin.systemd:
-        name: firewalld
-        state: stopped
-        enabled: false
-        masked: true
+#   tasks:
+#     - name: Make directory
+#       ansible.builtin.file:
+#         path: /etc/rancher/rke2/
+#         state: directory
+#         mode: "0700"
+#     - name: Place config
+#       ansible.builtin.copy:
+#         src: config/primary_config.yaml
+#         dest: /etc/rancher/rke2/config.yaml
+#         mode: "0600"
+#     - name: Disable firewalld
+#       ansible.builtin.systemd:
+#         name: firewalld
+#         state: stopped
+#         enabled: false
+#         masked: true
 
-- name: Initialialize additional control plane nodes
-  hosts: rke2-prod-cp-02,rke2-prod-cp-03
-  become: true
+# - name: Initialialize additional control plane nodes
+#   hosts: rke2-dev-cp-02,rke2-dev-cp-03
+#   become: true
 
-  tasks:
-    - name: Make directory
-      ansible.builtin.file:
-        path: /etc/rancher/rke2/
-        state: directory
-        mode: "0700"
-    - name: Place config
-      ansible.builtin.copy:
-        src: config/additional_config.yaml
-        dest: /etc/rancher/rke2/config.yaml
-        mode: "0600"
-    - name: Disable firewalld
-      ansible.builtin.systemd:
-        name: firewalld
-        state: stopped
-        enabled: false
-        masked: true
+#   tasks:
+#     - name: Make directory
+#       ansible.builtin.file:
+#         path: /etc/rancher/rke2/
+#         state: directory
+#         mode: "0700"
+#     - name: Place config
+#       ansible.builtin.copy:
+#         src: config/additional_config.yaml
+#         dest: /etc/rancher/rke2/config.yaml
+#         mode: "0600"
+#     - name: Disable firewalld
+#       ansible.builtin.systemd:
+#         name: firewalld
+#         state: stopped
+#         enabled: false
+#         masked: true
 
 - name: Initialize worker nodes
   hosts: worker

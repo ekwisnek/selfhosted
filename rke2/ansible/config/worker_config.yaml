@@ -6,3 +6,4 @@ kubelet-arg:
 with-node-id: true
 node-label:
   - "role=storage-node"
+profile: cis

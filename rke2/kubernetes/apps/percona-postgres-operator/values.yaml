@@ -1,0 +1,10 @@
+replicaCount: 3
+watchAllNamespaces: true
+resources:
+  limits:
+    cpu: 200m
+    memory: 500Mi
+  requests:
+    cpu: 100m
+    memory: 20Mi
+disableTelemetry: true
