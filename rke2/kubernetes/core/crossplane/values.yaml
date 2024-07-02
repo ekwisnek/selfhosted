@@ -1,0 +1,63 @@
+replicas: 3
+leaderElection: true
+provider:
+  # -- A list of Provider packages to install.
+  packages: []
+configuration:
+  # -- A list of Configuration packages to install.
+  packages: []
+function:
+  # -- A list of Function packages to install
+  packages: []
+resourcesCrossplane:
+  limits:
+    # -- CPU resource limits for the Crossplane pod.
+    cpu: 500m
+    # -- Memory resource limits for the Crossplane pod.
+    memory: 1024Mi
+  requests:
+    # -- CPU resource requests for the Crossplane pod.
+    cpu: 100m
+    # -- Memory resource requests for the Crossplane pod.
+    memory: 256Mi
+securityContextCrossplane:
+  # -- The user ID used by the Crossplane pod.
+  runAsUser: 65532
+  # -- The group ID used by the Crossplane pod.
+  runAsGroup: 65532
+  # -- Enable `allowPrivilegeEscalation` for the Crossplane pod.
+  allowPrivilegeEscalation: false
+  # -- Set the Crossplane pod root file system as read-only.
+  readOnlyRootFilesystem: true
+packageCache:
+  # -- Set to `Memory` to hold the package cache in a RAM backed file system. Useful for Crossplane development.
+  medium: ""
+  # -- The size limit for the package cache. If medium is `Memory` the `sizeLimit` can't exceed Node memory.
+  sizeLimit: 20Mi
+  # -- The name of a PersistentVolumeClaim to use as the package cache. Disables the default package cache `emptyDir` Volume.
+  pvc: ""
+  # -- The name of a ConfigMap to use as the package cache. Disables the default package cache `emptyDir` Volume.
+  configMap: ""
+resourcesRBACManager:
+  limits:
+    # -- CPU resource limits for the RBAC Manager pod.
+    cpu: 100m
+    # -- Memory resource limits for the RBAC Manager pod.
+    memory: 512Mi
+  requests:
+    # -- CPU resource requests for the RBAC Manager pod.
+    cpu: 100m
+    # -- Memory resource requests for the RBAC Manager pod.
+    memory: 256Mi
+securityContextRBACManager:
+  # -- The user ID used by the RBAC Manager pod.
+  runAsUser: 65532
+  # -- The group ID used by the RBAC Manager pod.
+  runAsGroup: 65532
+  # -- Enable `allowPrivilegeEscalation` for the RBAC Manager pod.
+  allowPrivilegeEscalation: false
+  # -- Set the RBAC Manager pod root file system as read-only.
+  readOnlyRootFilesystem: true
+metrics:
+  # -- Enable Prometheus path, port and scrape annotations and expose port 8080 for both the Crossplane and RBAC Manager pods.
+  enabled: true

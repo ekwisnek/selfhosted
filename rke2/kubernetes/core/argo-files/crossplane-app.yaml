@@ -1,0 +1,24 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crossplane
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: "https://charts.crossplane.io/master/"
+      targetRevision: 1.17.0-rc.0.215.g2a427fc8
+      chart: crossplane
+      helm:
+        valuesFiles:
+          - $values/rke2/kubernetes/core/crossplane/values.yaml       
+    - repoURL: "https://github.com/ekwisnek/selfhosted"
+      ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: crossplane-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

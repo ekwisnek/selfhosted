@@ -33,3 +33,4 @@ repoServer:
       memory: 512Mi
 applicationSet:
   replicaCount: 2
+  
