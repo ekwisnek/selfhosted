@@ -9,6 +9,7 @@ authentik:
 server:
   ingress:
     enabled: true
+    ingressClassName: "nginx"
     hosts:
       - authentik.ctrlplane.net
     annotations:
