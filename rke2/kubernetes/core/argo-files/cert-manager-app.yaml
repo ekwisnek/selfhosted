@@ -13,7 +13,7 @@ spec:
       helm:
         valuesObject:
           featureGates: "AdditionalCertificateOutputFormats=true"
-          disableAutoApproval: true
+          disableAutoApproval: false
           webhook:
             featureGates: "AdditionalCertificateOutputFormats=true"
     - repoURL: "https://github.com/ekwisnek/selfhosted"
