@@ -6,17 +6,17 @@ authentik:
     enabled: true
   postgresql:
     password: "BPN8RZuV5K9iclBt5QwRCouKLEEYPVjOjNLEM9rpzT8S8Zn5ba"
-
 server:
   ingress:
     enabled: true
     hosts:
       - authentik.ctrlplane.net
-
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt
+      nginx.ingress.kubernetes.io/from-to-www-redirect: true  
 postgresql:
   enabled: true
   auth:
     password: "BPN8RZuV5K9iclBt5QwRCouKLEEYPVjOjNLEM9rpzT8S8Zn5ba"
-
 redis:
   enabled: true
