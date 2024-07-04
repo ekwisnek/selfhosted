@@ -13,7 +13,7 @@ server:
       - authentik.ctrlplane.net
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt
-      nginx.ingress.kubernetes.io/from-to-www-redirect: true  
+      nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
 postgresql:
   enabled: true
   auth:
