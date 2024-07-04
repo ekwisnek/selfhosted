@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: node-red
+  namespace: argocd
+spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: "https://github.com/ekwisnek/selfhosted"
+    targetRevision: main
+    path: rke2/kubernetes/apps/node-red
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
