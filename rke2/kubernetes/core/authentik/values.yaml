@@ -1,0 +1,22 @@
+authentik:
+  secret_key: "ogTWKPZLKbTPmpYuAOtce7QH30eqQz32fYYKxnGQKx7l9kFaDA"
+  # This sends anonymous usage-data, stack traces on errors and
+  # performance data to authentik.error-reporting.a7k.io, and is fully opt-in
+  error_reporting:
+    enabled: true
+  postgresql:
+    password: "BPN8RZuV5K9iclBt5QwRCouKLEEYPVjOjNLEM9rpzT8S8Zn5ba"
+
+server:
+  ingress:
+    enabled: true
+    hosts:
+      - authentik.ctrlplane.net
+
+postgresql:
+  enabled: true
+  auth:
+    password: "BPN8RZuV5K9iclBt5QwRCouKLEEYPVjOjNLEM9rpzT8S8Zn5ba"
+
+redis:
+  enabled: true
