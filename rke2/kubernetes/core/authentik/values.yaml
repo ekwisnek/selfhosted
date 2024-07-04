@@ -13,7 +13,7 @@ server:
     hosts:
       - authentik.ctrlplane.net
     annotations:
-      cert-manager.io/cluster-issuer: letsencrypt
+      # cert-manager.io/cluster-issuer: letsencrypt
       nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
     tls:
       - secretName: authentik-tls
