@@ -17,7 +17,7 @@ spec:
   sources:
     - repoURL: "https://nats-io.github.io/k8s/helm/charts/"
       chart: nats
-      targetRevision: 1.1.10
+      targetRevision: 1.2.4
       helm:
         valueFiles:
           - $values/rke2/kubernetes/apps/nats/values.yaml

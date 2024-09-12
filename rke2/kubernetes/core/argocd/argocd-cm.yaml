@@ -7,6 +7,16 @@ metadata:
     app.kubernetes.io/name: argocd-cm
     app.kubernetes.io/part-of: argocd
 data:
+  dex.config: |                                                                                                                                                                                                     
+    connectors:                                                                                                                                                                                                     
+      - type: github                                                                                                                                                                                                
+        id: github                                                                                                                                                                                                  
+        name: GitHub                                                                                                                                                                                                
+        config:                                                                                                                                                                                                     
+          clientID: Ov23liNbywbhrpV42azM                                                                                                                                                                            
+          clientSecret: $dex.github.clientSecret                                                                                                                                                                    
+          orgs:                                                                                                                                                                                                     
+          - name: ctrlplane   
   resource.exclusions: |
       - apiGroups:
         - "*"
@@ -144,3 +154,4 @@ data:
         end
 
         return health_status    
+  url: https://argocd.ctrlplane.net

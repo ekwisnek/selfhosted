@@ -36,3 +36,5 @@ applicationSet:
 configs:
   cm:
     create: false
+  rbac:
+    create: false
