@@ -1,0 +1,24 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: "https://github.com/ekwisnek/selfhosted"
+      ref: values
+    - repoURL: "https://charts.bitnami.com/bitnami"
+      targetRevision: 1.3.22
+      chart: prometheus
+      helm:
+        valueFiles:
+          - $values/rke2/kubernetes/core/monitoring/simple/prometheus-values.yaml
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

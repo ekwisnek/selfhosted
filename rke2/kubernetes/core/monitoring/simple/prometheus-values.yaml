@@ -1,0 +1,4 @@
+alertmanager:
+  enabled: false
+server:
+  extraScrapeConfigs: []

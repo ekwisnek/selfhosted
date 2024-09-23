@@ -16,7 +16,7 @@ data:
           clientID: Ov23liNbywbhrpV42azM                                                                                                                                                                            
           clientSecret: $dex.github.clientSecret                                                                                                                                                                    
           orgs:                                                                                                                                                                                                     
-          - name: ctrlplane   
+          - name: ctrlplane
   resource.exclusions: |
       - apiGroups:
         - "*"

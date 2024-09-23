@@ -1,0 +1,14 @@
+general:
+  # Domain name for the service
+  domain: "REPLACE"
+  ingress:
+    # Set to false if using a custom ingress
+    enabled: true
+    # Current supported values for ingress type include: nginx
+    className: "nginx"
+    annotations:
+      nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
+    tls:
+      name: bitwarden-tls
+      clusterIssuer: letsencrypt
+  disableUserRegistration: "true"
