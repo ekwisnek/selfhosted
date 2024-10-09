@@ -9,6 +9,10 @@ spec:
     - repoURL: "https://mysql.github.io/mysql-operator"
       chart: mysql-operator
       targetRevision: 2.2.1
+      helm:
+        valuesObject: |
+          envs:
+            k8sClusterDomain: cluster.local
   destination:
     server: "https://kubernetes.default.svc"
     namespace: mysql-operator
