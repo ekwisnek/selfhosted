@@ -1,17 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kafka
+  name: mysql-operator
   namespace: argocd
 spec:
   project: "default"
   sources:
+    - repoURL: "https://mysql.github.io/mysql-operator"
+      chart: mysql-operator
+      targetRevision: 2.2.1
+      helm:
+        valueFiles:
+          - $values/rke2/kubernetes/apps/mysql-operator/values.yaml
     - repoURL: "https://github.com/ekwisnek/selfhosted"
-      targetRevision: main
-      path: rke2/kubernetes/apps/kafka
+      ref: values
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: kafka
+    namespace: mysql-operator
   syncPolicy:
     automated:
       prune: true

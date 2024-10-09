@@ -5,7 +5,13 @@ metadata:
   name: authentik
   namespace: argocd
 spec:
-  project: default
+  project: "default"
+  ignoreDifferences:
+    - group: ""
+      kind: Secret
+      name: authenik-postgresql
+      jqPathExpressions:
+        - '.data."postgres-password"'
   sources:
     - repoURL: "https://charts.goauthentik.io"
       targetRevision: 2024.6.0

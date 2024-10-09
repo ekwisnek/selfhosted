@@ -12,3 +12,4 @@ general:
       name: bitwarden-tls
       clusterIssuer: letsencrypt
   disableUserRegistration: "true"
+  

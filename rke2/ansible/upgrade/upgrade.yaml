@@ -3,6 +3,11 @@
   hosts: control_plane
   become: true
   serial: 1
+  vars_prompt:
+
+    - name: context
+      prompt: Which Kubernetes Context?
+      private: false
 
   pre_tasks:
     - name: Check RKE2 release API for current stable version
@@ -11,7 +16,7 @@
       register: release_api
 
   vars:
-    rke2_release_track: "v1.27"
+    rke2_release_track: "v1.30"
 
   tasks:
     - name: Grab current stable version
@@ -25,7 +30,7 @@
 
     - name: Check current Kubernetes version
       kubernetes.core.k8s_info:
-        context: default
+        context: "{{ context }}"
         kind: node
         name: "{{ ansible_hostname }}"
         kubeconfig: ~/.kube/config
@@ -55,12 +60,12 @@
       register: release_api
 
   vars:
-    rke2_release_track: "v1.27"
+    rke2_release_track: "v1.30"
 
   tasks:
     - name: Grab current stable version
       ansible.builtin.set_fact:
-        stable_version: "{{ release_api.json.data | selectattr('id', 'eq', 'v1.27') | map(attribute='latest') | first }}"
+        stable_version: "{{ release_api.json.data | selectattr('id', 'eq', 'v1.30') | map(attribute='latest') | first }}"
 
     - name: Debug version
       ansible.builtin.debug:
@@ -69,7 +74,7 @@
 
     - name: Check current Kubernetes version
       kubernetes.core.k8s_info:
-        context: default
+        context: "{{ context }}"
         kind: node
         name: "{{ ansible_hostname }}"
         kubeconfig: ~/.kube/config
