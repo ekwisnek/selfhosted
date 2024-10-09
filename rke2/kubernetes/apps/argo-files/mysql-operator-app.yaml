@@ -9,11 +9,6 @@ spec:
     - repoURL: "https://mysql.github.io/mysql-operator"
       chart: mysql-operator
       targetRevision: 2.2.1
-      helm:
-        valueFiles:
-          - $values/rke2/kubernetes/apps/mysql-operator/values.yaml
-    - repoURL: "https://github.com/ekwisnek/selfhosted"
-      ref: values
   destination:
     server: "https://kubernetes.default.svc"
     namespace: mysql-operator
