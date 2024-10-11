@@ -1,0 +1,12 @@
+apiVersion: instance.linode.upbound.io/v1alpha1
+kind: Instance
+metadata:
+  name: rocky-us-southeast
+  annotations:
+    crossplane.io/external-name: "30966915"
+spec:
+  forProvider:
+    booted: true
+    region: us-southeast
+  providerConfigRef:
+    name: default
