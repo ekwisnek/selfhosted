@@ -3,4 +3,4 @@ kind: Provider
 metadata:
   name: provider-linode
 spec:
-  package: xpkg.upbound.io/linode/provider-linode:v0.0.20
+  package: xpkg.upbound.io/linode/provider-linode:v0.0.24
