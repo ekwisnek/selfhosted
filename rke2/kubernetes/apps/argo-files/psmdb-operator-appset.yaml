@@ -27,7 +27,7 @@ spec:
           ref: values
         - chart: psmdb-operator
           repoURL: https://percona.github.io/percona-helm-charts/
-          targetRevision: 1.14.3
+          targetRevision: 1.16.3
           helm:
             valueFiles:
               - $values/rke2/kubernetes/apps/percona-mongodb-operator/values.yaml
