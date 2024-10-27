@@ -14,7 +14,7 @@ spec:
   sources:
     - repoURL: "https://mysql.github.io/mysql-operator"
       chart: mysql-operator
-      targetRevision: 2.2.1
+      targetRevision: 2.2.2
       helm:
         values: |
           envs:
