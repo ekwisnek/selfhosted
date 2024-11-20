@@ -1,0 +1,9 @@
+server: https://192.168.1.113:9345
+token: c798e509-9ff2-41b8-9f08-d8ec51471c20
+kubelet-arg:
+  - container-log-max-files=3
+  - container-log-max-size=2Mi
+with-node-id: true
+node-label:
+  - "role=storage-node"
+profile: cis

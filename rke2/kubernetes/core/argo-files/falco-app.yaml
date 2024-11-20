@@ -1,0 +1,24 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: falco
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: "https://falcosecurity.github.io/charts"
+      targetRevision: 4.14.2
+      chart: faclco
+      helm:
+        valueFiles:
+          - $values/rke2/kubernetes/core/falco/values.yaml       
+    - repoURL: "https://github.com/ekwisnek/selfhosted"
+      ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: crossplane-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

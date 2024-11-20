@@ -1,0 +1,14 @@
+token: c798e509-9ff2-41b8-9f08-d8ec51471c20
+tls-san:
+  - twitch-rke2-api-lb
+  - 192.168.1.113
+node-taint:
+  - "CriticalAddonsOnly=true:NoExecute"
+cni: cilium
+kubelet-arg:
+  - container-log-max-files=3
+  - container-log-max-size=2Mi
+with-node-id: true
+kube-apiserver-arg:
+  - "--anonymous-auth=false"
+profile: cis
