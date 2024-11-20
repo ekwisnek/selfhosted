@@ -9,7 +9,7 @@ spec:
   sources:
     - repoURL: "https://falcosecurity.github.io/charts"
       targetRevision: 4.14.2
-      chart: faclco
+      chart: falco
       helm:
         valueFiles:
           - $values/rke2/kubernetes/core/falco/values.yaml       
