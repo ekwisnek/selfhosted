@@ -1,0 +1,56 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "allow-nats"
+  namespace: nats-a
+spec:
+  endpointSelector:
+    {}
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: nats-b
+        app.kubernetes.io/instance: nats-b
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: nats-c
+        app.kubernetes.io/instance: nats-c
+    toPorts:
+    - ports:
+      - port: '7222'
+        protocol: TCP
+      # - port: '4222'
+      #   protocol: TCP
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: nats-a
+        app.kubernetes.io/instance: nats-a
+    toPorts:
+      - ports:
+        - port: '6222'
+          protocol: TCP
+        # - port: '4222'
+        #   protocol: TCP
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: nats-b
+        app.kubernetes.io/instance: nats-b
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: nats-c
+        app.kubernetes.io/instance: nats-c
+    toPorts:
+    - ports:
+      - port: '7222'
+        protocol: TCP
+  #     # - port: '4222'
+  #     #   protocol: TCP
+  - fromEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: nats-a
+        app.kubernetes.io/instance: nats-a
+    toPorts:
+      - ports:
+        - port: '6222'
+          protocol: TCP
+        # - port: '4222'
+        #   protocol: TCP

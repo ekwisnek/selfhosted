@@ -5,6 +5,12 @@ metadata:
   name: falco
   namespace: argocd
 spec:
+  ignoreDifferences:
+    - group: apps
+      kind: StatefulSet
+      name: falco-falcosidekick-ui-redis
+      jqPathExpressions:
+        - ".spec.volumeClaimTemplates[]?"
   project: default
   sources:
     - repoURL: "https://falcosecurity.github.io/charts"
@@ -17,8 +23,11 @@ spec:
       ref: values
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: crossplane-system
+    namespace: falco
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
