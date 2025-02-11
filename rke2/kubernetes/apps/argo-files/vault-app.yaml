@@ -9,7 +9,7 @@ spec:
   sources:
     - chart: vault
       repoURL: https://helm.releases.hashicorp.com
-      targetRevision: 0.25.0
+      targetRevision: 0.29.1
       helm:
         valueFiles:
           - $values/rke2/kubernetes/apps/vault/values.yaml

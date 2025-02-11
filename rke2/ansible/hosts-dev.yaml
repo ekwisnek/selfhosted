@@ -53,6 +53,8 @@ worker:
       ansible_host: 192.168.1.205
     rke2-dev-wk-06:
       ansible_host: 192.168.1.206
+    rke2-dev-wk-01-a:
+      ansible_host: 192.168.1.207
 
 rke2_cluster:
   children:

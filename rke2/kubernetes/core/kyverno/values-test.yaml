@@ -1,0 +1,225 @@
+global:
+  # image:
+  #   registry: harbor.km.spaceforce.mil
+  imagePullSecrets: []
+crds:
+  install: true
+  groups:
+    kyverno:
+      cleanuppolicies: true
+      clustercleanuppolicies: true
+      clusterpolicies: true
+      globalcontextentries: true
+      policies: true
+      policyexceptions: true
+      updaterequests: true
+    reports:
+      clusterephemeralreports: true
+      ephemeralreports: true
+    wgpolicyk8s:
+      clusterpolicyreports: true
+      policyreports: true
+  annotations: {}
+  customLabels: {}
+  migration:
+    enabled: false
+    resources:
+      - cleanuppolicies.kyverno.io
+      - clustercleanuppolicies.kyverno.io
+      - clusterpolicies.kyverno.io
+      - globalcontextentries.kyverno.io
+      - policies.kyverno.io
+      - policyexceptions.kyverno.io
+      - updaterequests.kyverno.io
+    image:
+      repository: kyverno/kyverno-cli
+      tag: ~
+      pullPolicy: Always
+    imagePullSecrets: []
+config:
+  enableDefaultRegistryMutation: false
+  webhooks:
+    namespaceSelector:
+      matchExpressions:
+        - key: kubernetes.io/metadata.name
+          operator: NotIn
+          values:
+            - kube-system
+            - kyverno
+        - key: control-plane
+          operator: NotIn
+          values:
+            - "true"
+    objectSelector:
+      matchExpressions:
+        - key: postgres-instance
+          operator: DoesNotExist
+        - key: monitor-instance
+          operator: DoesNotExist
+        - key: kubernetes.azure.com/managedby
+          operator: DoesNotExist
+  webhookAnnotations:
+    'admissions.enforcer/disabled': 'true'
+    'argocd.argoproj.io/sync-wave': '5'
+  excludeKyvernoNamespace: true
+imagePullSecrets: {}
+test:
+  sleep: 20
+  # image:
+  #   repository: registry1.dso.mil/ironbank/opensource/alpinelinux/alpine
+  #   tag: 3.18.4
+  #   pullPolicy: Always
+webhooksCleanup:
+  # image:
+  #   repository: registry1.dso.mil/ironbank/gitlab/gitlab/kubectl
+  #   tag: 16.5.1
+  #   pullPolicy: Always
+  imagePullSecrets: []
+policyReportsCleanup:
+  # image:
+  #   repository: registry1.dso.mil/ironbank/gitlab/gitlab/kubectl
+  #   tag: 16.5.1
+  #   pullPolicy: Always
+  imagePullSecrets: []
+features:
+  forceFailurePolicyIgnore:
+    enabled: true
+  logging:
+    format: json
+    verbosity: 1
+  policyExceptions:
+    enabled: true
+  registryClient:
+    allowInsecure: true
+admissionController:
+  replicas: 1
+  podAnnotations:
+    logs.agent.grafana.com/log-format: json
+    logs.agent.grafana.com/scrub-timestamp: "true"
+    logs.agent.grafana.com/scrub-level: "true"
+  metricsService:
+    annotations:
+      metrics.agent.grafana.com/scrape: "true"
+      metrics.agent.grafana.com/port: "8000"
+      metrics.agent.grafana.com/job: "integrations/kyverno"
+  priorityClassName: 'system-cluster-critical'
+  imagePullSecrets: []
+  # initContainer:
+  #   image:
+  #     repository: registry1.dso.mil/ironbank/opensource/kyverno/kyvernopre
+  #     tag: v1.13.2
+  #     pullPolicy: Always
+  container:
+    # image:
+    #   repository: registry1.dso.mil/ironbank/opensource/kyverno
+    #   tag: v1.13.2
+    #   pullPolicy: Always
+    resources:
+      limits:
+        memory: 800Mi
+      requests:
+        cpu: 200m
+        memory: 128Mi
+    extraArgs:
+      clientRateLimitBurst: 500
+      clientRateLimitQPS: 300
+backgroundController:
+  # image:
+  #   repository: registry1.dso.mil/ironbank/opensource/kyverno/kyverno/background-controller
+  #   tag: v1.13.2
+  #   pullPolicy: Always
+  imagePullSecrets: []
+  replicas: 1
+  podAnnotations:
+    logs.agent.grafana.com/log-format: json
+    logs.agent.grafana.com/scrub-timestamp: "true"
+    logs.agent.grafana.com/scrub-level: "true"
+  extraArgs:
+    genWorkers: 20
+    clientRateLimitBurst: 500
+    clientRateLimitQPS: 300
+  # resources:
+  #   limits:
+  #     memory: 768Mi
+  #   requests:
+  #     cpu: 250m
+  #     memory: 512Mi
+  securityContext:
+    runAsNonRoot: true
+    privileged: false
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop:
+        - ALL
+    seccompProfile:
+      type: RuntimeDefault
+    runAsUser: 1000
+  metricsService:
+    annotations:
+      metrics.agent.grafana.com/scrape: "true"
+      metrics.agent.grafana.com/port: "8000"
+      metrics.agent.grafana.com/job: "integrations/kyverno"
+cleanupController:
+  # image:
+  #   repository: registry1.dso.mil/ironbank/opensource/kyverno/kyverno/cleanup-controller
+  #   tag: v1.13.2
+  #   pullPolicy: Always
+  imagePullSecrets: []
+  replicas: 1
+  podAnnotations:
+    logs.agent.grafana.com/log-format: json
+    logs.agent.grafana.com/scrub-timestamp: "true"
+    logs.agent.grafana.com/scrub-level: "true"
+  metricsService:
+    annotations:
+      metrics.agent.grafana.com/scrape: "true"
+      metrics.agent.grafana.com/port: "8000"
+      metrics.agent.grafana.com/job: "integrations/kyverno"
+  securityContext:
+    runAsNonRoot: true
+    privileged: false
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop:
+        - ALL
+    seccompProfile:
+      type: RuntimeDefault
+    runAsUser: 1000
+reportsController:
+  extraArgs:
+    backgroundScanWorkers: 8
+    clientRateLimitBurst: 500
+    clientRateLimitQPS: 300
+  # image:
+  #   repository: registry1.dso.mil/ironbank/opensource/kyverno/kyverno/reports-controller
+  #   tag: v1.13.2
+  #   pullPolicy: Always
+  replicas: 1
+  securityContext:
+    runAsNonRoot: true
+    privileged: false
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop:
+        - ALL
+    seccompProfile:
+      type: RuntimeDefault
+    runAsUser: 1000
+  # resources:
+  #   limits:
+  #     memory: 300Mi
+  #   requests:
+  #     cpu: 100m
+  #     memory: 128Mi
+  podAnnotations:
+    logs.agent.grafana.com/log-format: json
+    logs.agent.grafana.com/scrub-timestamp: "true"
+    logs.agent.grafana.com/scrub-level: "true"
+  metricsService:
+    annotations:
+      metrics.agent.grafana.com/scrape: "true"
+      metrics.agent.grafana.com/port: "8000"
+      metrics.agent.grafana.com/job: "integrations/kyverno"
