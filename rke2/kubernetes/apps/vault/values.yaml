@@ -1,5 +1,9 @@
 ---
 server:
+  image:
+    repository: "hashicorp/vault"
+    tag: "1.18.1"
+    pullPolicy: Always
   resources:
     requests:
       cpu: 250m
@@ -36,3 +40,7 @@ server:
       enabled: true
 ui:
   enabled: true
+injector:
+  agentImage:
+    repository: "hashicorp/vault"
+    tag: "1.18.1"

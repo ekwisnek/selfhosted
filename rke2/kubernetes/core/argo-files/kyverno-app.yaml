@@ -7,58 +7,14 @@ metadata:
 spec:
   project: default
   sources:
-    - path: rke2/kubernetes/core/kyverno/policies
-      repoURL: "git@github.com:ekwisnek/selfhosted.git"
     - repoURL: "https://kyverno.github.io/kyverno"
-      targetRevision: 3.0.6
+      targetRevision: 3.3.6
       chart: kyverno
       helm:
-        valuesObject:
-          admissionController:
-            replicas: 5
-            resources:
-              limits:
-                cpu: 3000m
-                memory: 1000Mi
-              requests:
-                cpu: 500m
-                memory: 100Mi
-          backgroundController:
-            replicas: 3
-            extraArgs:
-              skipResourceFilters: false
-          cleanupController:
-            replicas: 2
-          reportsController:
-            replicas: 2
-            resources:
-              limits:
-                cpu: 1000m
-                memory: 500Mi
-              requests:
-                cpu: 500m
-                memory: 100Mi
-          config:
-            resourceFiltersExcludeNamespaces:
-              - kube-system
-              - kyverno
-            webhooks:
-              - namespaceSelector:
-                  matchExpressions:
-                    - key: kubernetes.io/metadata.name
-                      operator: NotIn
-                      values:
-                        - kube-system
-                        - kyverno
-              - objectSelector:
-                  matchExpressions:
-                    - key: webhooks.kyverno.io/exclude
-                      operator: DoesNotExist
-          features:
-            policyExceptions:
-              enabled: true
-            backgroundScan:
-              skipResourceFilters: false
+        values: |
+          crds:
+            migration:
+              enabled: false
   destination:
     server: "https://kubernetes.default.svc"
     namespace: kyverno

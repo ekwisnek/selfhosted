@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: trivy-operator
+  namespace: argocd  # ArgoCD's namespace
+spec:
+  project: default
+  source:
+    repoURL:  https://aquasecurity.github.io/helm-charts
+    targetRevision: 0.26.0
+    chart: trivy-operator
+    helm:
+      values: |
+        operator:
+          replicas: 3
+          configAuditScannerEnabled: false
+          rbacAssessmentScannerEnabled: false
+          infraAssessmentScannerEnabled: false
+          clusterComplianceEnabled: true
+          exposedSecretScannerEnabled: false
+        image:
+          tag: "0.24.0"
+          pullPolicy: Always
+        serviceMonitor:
+          enabled: false
+        trivy:
+          image:
+            tag: 0.59.1
+            pullPolicy: Always
+          storageClassEnabled: true
+          storageClassName: "default"
+          storageSize: "5Gi"
+          severity: HIGH,CRITICAL
+          slow: true
+          ignoreUnfixed: true
+        nodeCollector:
+          tag: 0.3.1
+        compliance:
+          specs:
+            - k8s-nsa-1.0
+            - k8s-pss-restricted-0.1
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: trivy-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
