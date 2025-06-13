@@ -21,8 +21,8 @@ spec:
         admin:
           create: true
           username: admin
-          password: "P@22w0rd!"
-          email: evan@ctrlplane.io
+          password: ""
+          email: info@ctrlplane.net
         replicaCount: 3
         config:
           costControl:
