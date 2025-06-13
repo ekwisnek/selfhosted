@@ -1,0 +1,87 @@
+kind: VirtualClusterTemplate
+apiVersion: management.loft.sh/v1
+metadata:
+  name: platform-template-prod
+spec:
+  displayName: Platform Production vCluster
+  description: This virtual cluster template deploys a production-ready vCluster with embedded etcd and integrated CoreDNS.
+  owner:
+    team: ctrlplane-platform-admins
+  versions:
+    - version: 1.0.0
+      template:
+        metadata:
+          annotations: {}
+        instanceTemplate:
+          metadata:
+            annotations: {}
+        apps: []
+        pro:
+          enabled: true
+        helmRelease:
+          chart:
+            name: vcluster
+            repo: https://charts.loft.sh
+            version: 0.25.0
+          values: |
+            sleepMode:
+              enabled: false
+            sync:
+              toHost:
+                ingresses:
+                  enabled: true
+            integrations:
+              certManager:
+                enabled: true
+              externalSecrets:
+                enabled: true
+                sync:
+                  externalSecrets:
+                    enabled: true
+                  stores:
+                    enabled: true
+                  clusterStores:
+                    enabled: true
+            controlPlane:
+              statefulSet:
+                resources:
+                  limits:
+                    ephemeral-storage: 8Gi
+                    memory: 1Gi
+                    cpu: 1
+                highAvailability:
+                  replicas: 3
+                  leaseDuration: 60
+                  renewDeadline: 40
+                  retryPeriod: 15
+              backingStore:
+                etcd:
+                  embedded:
+                    enabled: true
+                  deploy:
+                    statefulSet:
+                      highAvailability:
+                        replicas: 3
+              coredns:
+                embedded: true
+                enabled: true
+                deployment:
+                  replicas: 3
+      parameters:
+        - variable: k8sVersion
+          label: k8sVersion
+          description: Please select Kubernetes version
+          options:
+            - v1.32.3
+            - v1.31.7
+            - v1.30.11
+            - v1.29.14
+          defaultValue: v1.31.7
+          section: Kubernetes Environment
+  access:
+    - verbs:
+        - '*'
+      subresources:
+        - '*'
+      users:
+        - ctrlplane-platform-admins

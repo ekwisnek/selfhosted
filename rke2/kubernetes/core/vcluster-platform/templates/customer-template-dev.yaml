@@ -1,0 +1,91 @@
+apiVersion: management.loft.sh/v1
+kind: VirtualClusterTemplate
+metadata:
+  name: customer-template-dev
+spec:
+  displayName: Customer Dev vCluster
+  description: >-
+    This virtual cluster template deploys dev vCluster (non-ephermeral) with
+    sleep mode enabled
+  owner:
+    team: ctrlplane-platform-admins
+  template:
+    helmRelease:
+      chart:
+        version: 0.25.0
+      values: |-
+        sync:
+          toHost:
+            ingresses:
+              enabled: true
+        integrations:
+          certManager:
+            enabled: true
+          externalSecrets:
+            enabled: true
+            sync:
+              externalSecrets:
+                enabled: true
+              stores:
+                enabled: true
+              clusterStores:
+                enabled: true
+  versions:
+    - template:
+        pro:
+          enabled: true
+        helmRelease:
+          chart:
+            name: vcluster
+            repo: https://charts.loft.sh
+            version: 0.25.0
+          values: |
+            sleepMode:
+              enabled: true
+              autoSleep:
+                afterInactivity: 1h
+            sync:
+              toHost:
+                ingresses:
+                  enabled: true
+            integrations:
+              certManager:
+                enabled: true
+              externalSecrets:
+                enabled: true
+                sync:
+                  externalSecrets:
+                    enabled: true
+                  stores:
+                    enabled: true
+                  clusterStores:
+            controlPlane:
+              statefulSet:
+                resources:
+                  limits:
+                    ephemeral-storage: 4Gi
+                    memory: 512Mi
+                    cpu: 500m
+        accessPoint:
+          ingress: {}
+        spaceTemplate:
+          metadata: {}
+      parameters:
+        - variable: k8sVersion
+          label: k8sVersion
+          description: Please select Kubernetes version
+          options:
+            - v1.32.3
+            - v1.31.7
+            - v1.30.11
+            - v1.29.14
+          defaultValue: v1.31.7
+          section: Kubernetes Environment
+      version: 1.0.0
+  access:
+    - verbs:
+        - '*'
+      subresources:
+        - '*'
+      users:
+        - ctrlplane-customer-acme
